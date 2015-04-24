@@ -1,4 +1,4 @@
-# activity_recognition_and_guidance
+# Activity Recognition and Guidance
 CS 766 Computer Vision Final Project
 
 # PIPELINE
