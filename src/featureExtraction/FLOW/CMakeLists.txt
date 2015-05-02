@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.4)
+project( flow )
+find_package( OpenCV REQUIRED )
+add_executable( flow flow.cpp )
+target_link_libraries( flow ${OpenCV_LIBS} )

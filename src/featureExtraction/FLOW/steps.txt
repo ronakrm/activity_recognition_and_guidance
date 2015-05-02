@@ -1,0 +1,9 @@
+steps:
+2.1 - remove electronic display
+2.2 unscrew first hand grip
+2.3 unscrew second hand grip
+2.4.1 attach drill head
+2.4.2+3 remove first step
+2.4.4+5 remove second step
+2.5.1 remove knob
+2.5.3 remove wheel
