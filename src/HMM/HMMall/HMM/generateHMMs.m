@@ -1,43 +1,34 @@
-function [models] = generateHMMs(numActions, numSymbols, sequences)
+function [models] = generateHMMs(numActions, numSymbols, states, sequences)
 %GENERATEHMMS Summary of this function goes here
 %   Generates the HMM models based on the number of actions to classify
 %   
 %   Input parameters are:
 %       numActions - the total number of actions to clasisfy
 %       numSymbols - the number of observable symbols
+%       states - the number of states in the HMMs
 %       sequences - the training sequences to generate HMM models
-    
-    models = zeros(numActions);
-    
+
+    % generate an HMM for every action
     for i = 1 : numActions
-       models(i).a = 1; 
+        % save number of states and symbols to model
+        models(i).states = states;
+        models(i).symbols = numSymbols;
+       
+        % initial guess of parameters
+        models(i).prior = normalise(rand(models(i).states,1));
+        models(i).transmat = mk_stochastic(rand(models(i).states,models(i).states));
+        models(i).obsmat = mk_stochastic(rand(models(i).states,models(i).symbols));
+        
+        % improve guess of parameters using EM
+        [LL, bestPrior, bestTransmat, bestObsmat] = dhmm_em(sequences, ...
+                models(i).prior, models(i).transmat, models(i).obsmat, ...
+                    'max_iter', 5);
+        
+        % save model parameters to model
+        models(i).prior = bestPrior;
+        models(i).transmat = bestTransmat;
+        models(i).obsmat = bestObsmat;
     end
-    O = 3;
-Q = 2;
-
-% "true" parameters
-prior0 = normalise(rand(Q,1));
-transmat0 = mk_stochastic(rand(Q,Q));
-obsmat0 = mk_stochastic(rand(Q,O));
-
-% training data
-T = 5;
-nex = 10;
-data = dhmm_sample(prior0, transmat0, obsmat0, T, nex);
-
-% initial guess of parameters
-prior1 = normalise(rand(Q,1));
-transmat1 = mk_stochastic(rand(Q,Q));
-obsmat1 = mk_stochastic(rand(Q,O));
-
-% improve guess of parameters using EM
-[LL, prior2, transmat2, obsmat2] = dhmm_em(data, prior1, transmat1, obsmat1, 'max_iter', 5);
-LL
-
-% use model to compute log likelihood
-loglik = dhmm_logprob(data, prior2, transmat2, obsmat2)
-% log lik is slightly different than LL(end), since it is computed after the final M step
-
 
 end
 
