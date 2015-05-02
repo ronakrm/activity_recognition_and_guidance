@@ -57,5 +57,23 @@ disp('starting clustering. this may take a while');
 
 [~, clusterCenters] = kmeans(superHoof, numClusters);
 csvwrite(strcat(pathToData, 'codebook.csv'), cell2mat(superHoof));
-end
 
+
+
+% now go over the generated a1_hoof.csv files and make new files containing
+% the symbol sequences by comparing each hoof to the clusters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end
