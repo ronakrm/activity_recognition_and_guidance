@@ -1,4 +1,4 @@
-function [accuracy] = crossValidation(sequences)
+function [accuracy] = crossValidation()
 %   Performs cross-validation testing to determine accuracy for action
 %   recognition
 % 
@@ -8,13 +8,24 @@ function [accuracy] = crossValidation(sequences)
     % initialize parameters
     numStates = 8;
     numSymbols = 80;
-    numVideos = size(sequences,2);
-    numActions = size(sequences,1);
+    numVideos = 5;
+    numActions = 8;
     test_count = 0;
     incorrect = 0;
     
+    % generate your hoofs
+    hoofgen(numVideos); 
+    
     % perform leave-one-out cross-validation on all videos
     for i = 1 : numVideos
+        % cluster without the guy
+        doClusteringExcludingI(i, numVideos, numSymbols);
+        
+        % generate sequences using the codebook made above
+        generateSequences(numVideos, numActions);
+        
+        % get our test/train sequence
+        sequences = getSequences(numVideos, numActions);        
         
         % create training and test set
         trainSet = sequences;
