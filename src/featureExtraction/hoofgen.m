@@ -5,9 +5,8 @@
 % inclusive. assumes that optical flow follow the structure above and are
 % already created. also clusters them according to the input number of
 % clusters using k-means to generate the symbols for the HMM.
-function hoofgen(videoStartNum, videoEndNum)
+function hoofgen(numVideos)
 
-numClusters = 80;
 numBins = 30;
 numActions = 8;
 
@@ -16,7 +15,7 @@ superIndex = 1;
 
 pathToData = '../../data/';
 
-for folderIndex = videoStartNum:videoEndNum
+for folderIndex = 1:numVideos
     % go to the video's directory
     videoDir = strcat(pathToData,'v', num2str(folderIndex), '/');
     
@@ -51,51 +50,5 @@ for folderIndex = videoStartNum:videoEndNum
         csvwrite(strcat(videoDir, outFileName), outputMat);
     end
 end
-
-%%
-% now that we've generated everything, cluster them
-disp('starting clustering. this may take a while');
-
-[~, clusterCenters] = kmeans(cell2mat(superHoof), numClusters);
-csvwrite(strcat(pathToData, 'codebook.csv'), clusterCenters);
-
-disp('clustering done. codebook file written!');
-%%
-
-% now go over the generated a1_hoof.csv files and make new files containing
-% the symbol sequences by comparing each hoof to the clusters
-
-disp('generating sequences for each action');
-
-for folderIndex = videoStartNum:videoEndNum
-    % go to the video's directory - data/v1/
-    videoDir = strcat(pathToData,'v', num2str(folderIndex), '/');
-    
-    % generate state sequences for each action
-    for actIndex = 1:numActions
-        currentFile = strcat(videoDir, 'a', num2str(actIndex), '_hoof.csv');
-        
-        % read in the file
-        hoofs = csvread(currentFile);
-        
-        outputMat = zeros(size(hoofs,1),1);
-        
-        % for each frame, find the closest cluster in clusterCenters and
-        % write the index to the output
-        for frame = 1: size(hoofs,1)
-            closest = getCluster(clusterCenters, hoofs(frame,:));
-            outputMat(frame) = closest;
-        end
-        
-        % save output matrix as a3_sequence.csv
-        outFileName = strcat('a', num2str(actIndex), '_sequence.csv');
-        csvwrite(strcat(videoDir, outFileName), outputMat);
-    end
-end
-
-
-
-
-
 
 end
