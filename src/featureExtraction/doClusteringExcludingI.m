@@ -39,13 +39,9 @@ end
 % this removes the initialization line
 superHoof(1,:) = [];
 
-disp('starting clustering. this may take a while');
-
 [~, clusterCenters] = kmeans(superHoof, numClusters);
 csvwrite(strcat(pathToData, 'codebook.csv'), clusterCenters);
 codebook = clusterCenters;
-
-disp('clustering done. codebook file written!');
 
 end
 

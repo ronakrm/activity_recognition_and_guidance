@@ -1,4 +1,4 @@
-function [max_likelihood, max_index] = testLikelihood(models, sequence)
+function [max_likelihood, max_index, likelihoods] = testLikelihood(models, sequence)
 %   Obtains the log liklihood of a model fitting a set of observation
 %   symbols
 
