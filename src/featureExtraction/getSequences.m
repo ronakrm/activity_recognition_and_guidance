@@ -1,13 +1,12 @@
-function [sequences] = getSequences(videoStartNum, videoEndNum)
+function [sequences] = getSequences(numVideos, numActions)
 %   Get the observed sequences for each action and creates a cell array of
 %   all observed sequences
 % 
 %   Inputs:
-%       videoStartNum - the index of the first video
-%       videoEndNum - the index of the second video
+%       numVideos - the total number of videos
+%       numActions - the total number of actions
 
     % initialize parameters
-    numActions = 8;
     pathToData = '../../data/';
     
     % initialize cell array
@@ -18,7 +17,7 @@ function [sequences] = getSequences(videoStartNum, videoEndNum)
         
         % iterate through all videos to get observable sequences from
         % actions
-        for folderIndex = videoStartNum : videoEndNum
+        for folderIndex = 1 : numVideos
             % import sequences
             videoDir = strcat(pathToData,'v', num2str(folderIndex), '/');
             currentFile = strcat(videoDir, 'a', num2str(actIndex), ...
