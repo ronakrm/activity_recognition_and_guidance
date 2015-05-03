@@ -68,15 +68,15 @@ void outputOpticalFlow(string outdir, string vidname, string segname) {
 			continue;
 		}
 
-		Mat frame;
+		Mat aframe;
 
 		// do nothing for dead time before start of first action
 		// do nothing for middle frames
 		if ((frame_num) % trajectory_length != 0
 					|| frame_num < start_frame) {
 			// get a new frame
-			capture >> frame;
-			if(frame.empty())
+			capture >> aframe;
+			if(aframe.empty())
 				break;
 			
 			//cout << "skipping frame " << frame_num << endl;
@@ -84,7 +84,8 @@ void outputOpticalFlow(string outdir, string vidname, string segname) {
 			continue;
 		}
 
-		capture >> frame;
+		capture >> aframe;
+		Mat frame = aframe(Rect(0,0,1280,480));
 
 		if(frame_num == start_frame) {
 			image.create(frame.size(), CV_8UC3);
