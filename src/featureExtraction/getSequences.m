@@ -6,7 +6,7 @@ function [sequences] = getSequences(videoStartNum, videoEndNum)
 %       videoStartNum - the index of the first video
 %       videoEndNum - the index of the second video
 
-    
+    % initialize parameters
     numActions = 8;
     pathToData = '../../data/';
     

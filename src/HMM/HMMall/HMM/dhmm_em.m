@@ -58,7 +58,7 @@ while (num_iter <= max_iter) & ~converged
    obsmat = mk_stochastic(exp_num_emit);
  end
 
- if verbose, fprintf(1, 'iteration %d, loglik = %f\n', num_iter, loglik); end
+ % if verbose, fprintf(1, 'iteration %d, loglik = %f\n', num_iter, loglik); end
  num_iter =  num_iter + 1;
  converged = em_converged(loglik, previous_loglik, thresh);
  previous_loglik = loglik;

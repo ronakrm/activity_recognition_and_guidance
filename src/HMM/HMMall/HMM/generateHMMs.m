@@ -29,6 +29,7 @@ function [models] = generateHMMs(numActions, numSymbols, states, sequences)
                     'max_iter', 5);
         
         % save model parameters to model
+        models(i).LL = LL;
         models(i).prior = bestPrior;
         models(i).transmat = bestTransmat;
         models(i).obsmat = bestObsmat;
