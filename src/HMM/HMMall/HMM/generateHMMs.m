@@ -34,6 +34,5 @@ function [models] = generateHMMs(numActions, numSymbols, states, sequences)
         models(i).transmat = bestTransmat;
         models(i).obsmat = bestObsmat;
     end
-
 end
 
