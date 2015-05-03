@@ -8,11 +8,10 @@ function [max_likelihood, max_index] = testLikelihood(models, sequence)
 
     % initialize parameters
     numActions = size(models,2);
-    likelihoods = ones(8,1);
+    likelihoods = zeros(8,1);
     
     % find likelihood of sequence based on all actions
     for i = 1 : numActions
-        
         % use model to compute log likelihood
         likelihoods(i) = dhmm_logprob(sequence, models(i).prior, ...
             models(i).transmat, models(i).obsmat);
@@ -26,6 +25,5 @@ function [max_likelihood, max_index] = testLikelihood(models, sequence)
     if(isinf(max_likelihood))
         max_index = 0;
     end
-
 end
 
