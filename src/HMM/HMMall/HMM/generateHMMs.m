@@ -1,12 +1,16 @@
 function [models] = generateHMMs(numActions, numSymbols, states, sequences)
-%GENERATEHMMS Summary of this function goes here
 %   Generates the HMM models based on the number of actions to classify
 %   
-%   Input parameters are:
+%   Inputs:
 %       numActions - the total number of actions to clasisfy
-%       numSymbols - the number of observable symbols
+%       numSymbol - the total number of observable symbols
 %       states - the number of states in the HMMs
-%       sequences - the training sequences to generate HMM models
+%       sequences - the training sequences to generate HMM model
+    
+    % initialize the models
+    models(1:8) = struct('states',zeros(1),'symbols',zeros(1),...
+        'prior',rand(states,1),'transmat',rand(states,states),'obsmat',...
+            rand(states,numSymbols));
 
     % generate an HMM for every action
     for i = 1 : numActions
@@ -20,7 +24,7 @@ function [models] = generateHMMs(numActions, numSymbols, states, sequences)
         models(i).obsmat = mk_stochastic(rand(models(i).states,models(i).symbols));
         
         % improve guess of parameters using EM
-        [LL, bestPrior, bestTransmat, bestObsmat] = dhmm_em(sequences, ...
+        [LL, bestPrior, bestTransmat, bestObsmat] = dhmm_em(sequences(i,:), ...
                 models(i).prior, models(i).transmat, models(i).obsmat, ...
                     'max_iter', 5);
         
