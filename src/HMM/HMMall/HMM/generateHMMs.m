@@ -1,4 +1,4 @@
-function [models] = generateHMMs(numActions, numSymbols, states, sequences)
+function [models] = generateHMMs(numActions, numSymbols, states, sequences, numHMMIters)
 %   Generates the HMM models based on the number of actions to classify
 %   
 %   Inputs:
@@ -26,7 +26,7 @@ function [models] = generateHMMs(numActions, numSymbols, states, sequences)
         % improve guess of parameters using EM
         [LL, bestPrior, bestTransmat, bestObsmat] = dhmm_em(sequences(i,:), ...
                 models(i).prior, models(i).transmat, models(i).obsmat, ...
-                    'max_iter', 5);
+                    'max_iter', numHMMIters);
         
         % save model parameters to model
         models(i).LL = LL;

@@ -1,4 +1,4 @@
-function [codebook] = doClusteringExcludingI(i, numVideos, numClusters)
+function [codebook] = doClusteringExcludingI(i, numVideos, numBins, numClusters)
 %   Cluster videos using numClusters clusters but not use video i
 %
 %   Inputs:
@@ -8,7 +8,6 @@ function [codebook] = doClusteringExcludingI(i, numVideos, numClusters)
 
 % initialize parameters
 numActions = 8;
-numBins = 30;
 pathToData = '../../data/';
 
 superHoof = zeros(1,numBins);

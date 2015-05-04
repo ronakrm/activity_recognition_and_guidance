@@ -1,25 +1,34 @@
-function [accuracy] = crossValidation()
+function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, numSymbols, numHMMIters)
 %   Performs cross-validation testing to determine accuracy for action
 %   recognition
 %
 %   Inputs:
 %       sequences - the observed sequences of all actions in all videos
 
-% initialize parameters
-numStates = 8;
-numSymbols = 80;
-numVideos = 5;
+% initialize constraints
+numVideos = 10;
 numActions = 8;
-test_count = 0;
-incorrect = 0;
+
+% initialize hoof parameters
+numHoofBins = 60;
+
+% initialize hmm parameters
+numStates = 8;
+numSymbols = 20;
+numHMMIters = 5;
 
 % generate your hoofs
-hoofgen(numVideos);
+disp('generating hoof features.');
+hoofgen(numVideos, numActions, numHoofBins);
+fprintf('hoof features generated.\n');
+
+actionAccuracies = zeros(numActions,1);
 
 % perform leave-one-out cross-validation on all videos
 for i = 1 : numVideos
+    fprintf('starting validation without video %d\n', i);
     % cluster without the guy
-    doClusteringExcludingI(i, numVideos, numSymbols);
+    doClusteringExcludingI(i, numVideos, numHoofBins, numSymbols);
     
     % generate sequences using the codebook made above
     generateSequences(numVideos, numActions);
@@ -34,7 +43,7 @@ for i = 1 : numVideos
     
     % train the HMM models on the training set
     models = generateHMMs(numActions, numSymbols, numStates, ...
-        trainSet);
+        trainSet, numHMMIters);
     
     % test each action of the testing set video on the HMM models
     for j = 1 : numActions
@@ -43,16 +52,14 @@ for i = 1 : numVideos
         [max_likelihood, max_index, likelihoods] = testLikelihood(models, testSet(j));
         
         % if the correct action was recognized
-        if(max_index ~= j)
-            incorrect = incorrect + 1;
+        if(max_index == j)
+            actionAccuracies(j) = actionAccuracies(j) + 1;
         end
-        
-        test_count = test_count + 1;
     end
 end
 
 % return the overall accuracy
-accuracy = (test_count - incorrect) / test_count;
-
+actionAccuracies = actionAccuracies / numVideos;
+accuracy = mean(actionAccuracies);
 end
 
