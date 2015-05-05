@@ -8,6 +8,9 @@ function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, 
 %       accuracy - the overall accuracy of the action recognition
 %       actionAccuracies - the accuracy of each action classification
 
+
+% THESE ARE ALSO CODED INTO gridSearcher!! Make sure to change there
+% also!
 % initialize constraints
 numVideos = 30;
 numActions = 8;
@@ -20,6 +23,8 @@ numActions = 8;
 % numSymbols = 50;
 % numHMMIters = 5;
 
+%hoof generation moved to gridSearcher, left commented here for individual
+%testing needs
 % generate your hoofs
 disp('generating hoof features.');
 hoofgen(numVideos, numActions, numHoofBins);
@@ -31,7 +36,7 @@ actionAccuracies = zeros(numActions,1);
 for i = 1 : numVideos
     fprintf('starting validation without video %d\n', i);
     % cluster without the guy
-    doClusteringExcludingI(i, numVideos, numHoofBins, numSymbols);
+    doClusteringExcludingI(i, numVideos, numActions, numHoofBins, numSymbols);
     
     % generate sequences using the codebook made above
     generateSequences(numVideos, numActions);
