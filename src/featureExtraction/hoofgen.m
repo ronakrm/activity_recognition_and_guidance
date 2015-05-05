@@ -5,10 +5,7 @@
 % inclusive. assumes that optical flow follow the structure above and are
 % already created. also clusters them according to the input number of
 % clusters using k-means to generate the symbols for the HMM.
-function hoofgen(numVideos)
-
-numBins = 30;
-numActions = 8;
+function hoofgen(numVideos, numActions, numBins)
 
 superHoof = cell(1,numBins);
 superIndex = 1;
@@ -28,7 +25,7 @@ for folderIndex = 1:numVideos
         flows(1)=[];flows(1)=[];
         num_flows = size(flows,1);
         
-        outputMat = zeros(num_flows, 30);
+        outputMat = zeros(num_flows, numBins);
         
         % files are named 1...num_files.txt, so iterate
         for flow = 1:num_flows
