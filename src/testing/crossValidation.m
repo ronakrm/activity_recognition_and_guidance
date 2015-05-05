@@ -26,9 +26,9 @@ numActions = 8;
 %hoof generation moved to gridSearcher, left commented here for individual
 %testing needs
 % generate your hoofs
-disp('generating hoof features.');
-hoofgen(numVideos, numActions, numHoofBins);
-fprintf('hoof features generated.\n');
+%disp('generating hoof features.');
+%hoofgen(numVideos, numActions, numHoofBins);
+%fprintf('hoof features generated.\n');
 
 actionAccuracies = zeros(numActions,1);
 
