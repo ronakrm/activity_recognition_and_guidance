@@ -13,12 +13,12 @@ numVideos = 30;
 numActions = 8;
 
 % initialize hoof parameters
-numHoofBins = 10;
-
-% initialize hmm parameters
-numStates = 3;
-numSymbols = 50;
-numHMMIters = 5;
+% numHoofBins = 10;
+% 
+% % initialize hmm parameters
+% numStates = 3;
+% numSymbols = 50;
+% numHMMIters = 5;
 
 % generate your hoofs
 disp('generating hoof features.');
