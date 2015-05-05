@@ -6,7 +6,7 @@ function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, 
 %       sequences - the observed sequences of all actions in all videos
 
 % initialize constraints
-numVideos = 10;
+numVideos = 30;
 numActions = 8;
 
 % initialize hoof parameters
