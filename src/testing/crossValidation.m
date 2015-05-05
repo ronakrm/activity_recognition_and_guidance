@@ -4,17 +4,20 @@ function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, 
 %
 %   Inputs:
 %       sequences - the observed sequences of all actions in all videos
+%   Outputs:
+%       accuracy - the overall accuracy of the action recognition
+%       actionAccuracies - the accuracy of each action classification
 
 % initialize constraints
 numVideos = 30;
 numActions = 8;
 
 % initialize hoof parameters
-numHoofBins = 60;
+numHoofBins = 10;
 
 % initialize hmm parameters
-numStates = 8;
-numSymbols = 20;
+numStates = 3;
+numSymbols = 50;
 numHMMIters = 5;
 
 % generate your hoofs

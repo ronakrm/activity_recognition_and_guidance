@@ -5,6 +5,8 @@ function [sequences] = getSequences(numVideos, numActions)
 %   Inputs:
 %       numVideos - the total number of videos
 %       numActions - the total number of actions
+%   Outputs:
+%       sequences - all observed sequences
 
     % initialize parameters
     pathToData = '../../data/';

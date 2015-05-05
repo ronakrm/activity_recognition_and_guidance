@@ -2,9 +2,9 @@
 outputfile = {'numHoofBins', 'numSymbols', 'numStates', '1','2','3','4','5','6','7','8','acc'};
 counter = 2;
 
-for numHoofBins = 10:4:90
-    for numSymbols = 5:15:155
-        for numStates = 3:3:30
+for numHoofBins = 10:10:90
+    for numSymbols = 5:20:145
+        for numStates = 3:6:27
             [accuracy, actionAccuracies] = crossValidation(...
                 numHoofBins, numStates, numSymbols, 10);
             
