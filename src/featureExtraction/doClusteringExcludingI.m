@@ -1,4 +1,4 @@
-function [codebook] = doClusteringExcludingI(i, numVideos, numBins, numClusters)
+function [codebook] = doClusteringExcludingI(i, numVideos, numActions, numBins, numClusters)
 %   Cluster videos using numClusters clusters but not use video i
 %
 %   Inputs:
@@ -7,7 +7,6 @@ function [codebook] = doClusteringExcludingI(i, numVideos, numBins, numClusters)
 %       numClusters - the number of clusters
 
 % initialize parameters
-numActions = 8;
 pathToData = '../../data/';
 
 superHoof = zeros(1,numBins);
@@ -38,7 +37,7 @@ end
 % this removes the initialization line
 superHoof(1,:) = [];
 
-[~, clusterCenters] = kmeans(superHoof, numClusters);
+[~, clusterCenters] = kmeans(superHoof, numClusters, 'MaxIter', 500);
 csvwrite(strcat(pathToData, 'codebook.csv'), clusterCenters);
 codebook = clusterCenters;
 

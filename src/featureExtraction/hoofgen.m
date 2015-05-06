@@ -7,9 +7,6 @@
 % clusters using k-means to generate the symbols for the HMM.
 function hoofgen(numVideos, numActions, numBins)
 
-superHoof = cell(1,numBins);
-superIndex = 1;
-
 pathToData = '../../data/';
 
 for folderIndex = 1:numVideos
@@ -38,8 +35,6 @@ for folderIndex = 1:numVideos
             
             % save these hoof features to the output matrix
             outputMat(flow, :) = hoof';
-            superHoof(superIndex,:) = num2cell(hoof');
-            superIndex = superIndex + 1;
         end
         
         % save output matrix as a3_hoof.csv

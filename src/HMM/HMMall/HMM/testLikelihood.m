@@ -8,7 +8,7 @@ function [max_likelihood, max_index, likelihoods] = testLikelihood(models, seque
 
     % initialize parameters
     numActions = size(models,2);
-    likelihoods = zeros(8,1);
+    likelihoods = zeros(numActions,1);
     
     % find likelihood of sequence based on all actions
     for i = 1 : numActions

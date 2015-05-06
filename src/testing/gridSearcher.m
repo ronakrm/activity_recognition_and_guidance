@@ -1,10 +1,22 @@
+%% Grid search over parameters for pipeline after flow features have been calculated elsewhere.
 
+
+%% THESE ARE ALSO CODED INTO crossValidation!! Make sure to change there
+% also!
+numVideos = 30;
+numActions = 8;
+
+%%
 outputfile = {'numHoofBins', 'numSymbols', 'numStates', '1','2','3','4','5','6','7','8','acc'};
 counter = 2;
 
-for numHoofBins = 10:4:90
-    for numSymbols = 5:15:155
-        for numStates = 3:3:30
+for numHoofBins = 10:10:90
+    % generate your hoofs
+    disp('generating hoof features.');
+    hoofgen(numVideos, numActions, numHoofBins);
+    fprintf('hoof features generated.\n');
+    for numSymbols = 5:20:145
+        for numStates = 3:6:27
             [accuracy, actionAccuracies] = crossValidation(...
                 numHoofBins, numStates, numSymbols, 10);
             

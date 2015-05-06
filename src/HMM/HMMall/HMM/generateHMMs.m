@@ -6,6 +6,8 @@ function [models] = generateHMMs(numActions, numSymbols, states, sequences, numH
 %       numSymbol - the total number of observable symbols
 %       states - the number of states in the HMMs
 %       sequences - the training sequences to generate HMM model
+%   Outputs:
+%       models - the trained HMM models
     
     % initialize the models
     models(1:8) = struct('states',zeros(1),'symbols',zeros(1),...
@@ -25,8 +27,8 @@ function [models] = generateHMMs(numActions, numSymbols, states, sequences, numH
         
         % improve guess of parameters using EM
         [LL, bestPrior, bestTransmat, bestObsmat] = dhmm_em(sequences(i,:), ...
-                models(i).prior, models(i).transmat, models(i).obsmat, ...
-                    'max_iter', numHMMIters);
+            models(i).prior, models(i).transmat, models(i).obsmat, ...
+            'max_iter', numHMMIters);
         
         % save model parameters to model
         models(i).LL = LL;
