@@ -12,7 +12,7 @@ function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, 
 % THESE ARE ALSO CODED INTO gridSearcher!! Make sure to change there
 % also!
 % initialize constraints
-numVideos = 30;
+numVideos = 10;
 numActions = 8;
 
 % initialize hoof parameters
@@ -22,6 +22,8 @@ numActions = 8;
 % numStates = 3;
 % numSymbols = 50;
 % numHMMIters = 5;
+
+rng(1337);
 
 %hoof generation moved to gridSearcher, left commented here for individual
 %testing needs
@@ -58,6 +60,7 @@ for i = 1 : numVideos
         
         % find which action was recognized
         [max_likelihood, max_index, likelihoods] = testLikelihood(models, testSet(j));
+        likelihoods;
         
         % if the correct action was recognized
         if(max_index == j)
