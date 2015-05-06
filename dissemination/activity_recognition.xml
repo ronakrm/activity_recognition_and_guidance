@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <net xmlns="http://pdv.cs.tu-berlin.de/TimeNET/schema/eDSPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="0" netclass="eDSPN" xsi:schemaLocation="http://pdv.cs.tu-berlin.de/TimeNET/schema/eDSPN etc/schemas/eDSPN.xsd">
+<place id="ATTACHDRILLHEAD" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="705" y="300"/>
+<label id="LATTACHDRILLHEAD" text="ATTACHDRILLHEAD" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
 <place id="REMOVEELECTRONICDISPLAY" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
 <graphics orientation="0" x="165" y="300"/>
 <label id="LREMOVEELECTRONICDISPLAY" text="REMOVEELECTRONICDISPLAY" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="REMOVEFIRSTSTEP" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="975" y="180"/>
+<label id="LREMOVEFIRSTSTEP" text="REMOVEFIRSTSTEP" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="REMOVEKNOB" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="1245" y="300"/>
+<label id="LREMOVEKNOB" text="REMOVEKNOB" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="REMOVESECONDSTEP" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="975" y="420"/>
+<label id="LREMOVESECONDSTEP" text="REMOVESECONDSTEP" type="text">
+<graphics orientation="0" x="0" y="0"/>
+</label>
+</place>
+<place id="REMOVEWHEEL" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="1455" y="300"/>
+<label id="LREMOVEWHEEL" text="REMOVEWHEEL" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </place>
@@ -18,193 +48,125 @@
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </place>
-<place id="REMOVEFIRSTSTEP" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
-<graphics orientation="0" x="975" y="180"/>
-<label id="LREMOVEFIRSTSTEP" text="REMOVEFIRSTSTEP" type="text">
+<place id="DONE" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
+<graphics orientation="0" x="1640" y="300"/>
+<label id="LDONE" text="DONE" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </place>
-<place id="ATTACHDRILLHEAD" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
-<graphics orientation="0" x="705" y="300"/>
-<label id="LATTACHDRILLHEAD" text="ATTACHDRILLHEAD" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</place>
-<place id="REMOVESECONDSTEP" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
-<graphics orientation="0" x="975" y="420"/>
-<label id="LREMOVESECONDSTEP" text="REMOVESECONDSTEP" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</place>
-<place id="REMOVEKNOB" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
-<graphics orientation="0" x="1245" y="300"/>
-<label id="LREMOVEKNOB" text="REMOVEKNOB" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</place>
-<place id="REMOVEWHEEL" initialMarking="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="node">
-<graphics orientation="0" x="1515" y="300"/>
-<label id="LREMOVEWHEEL" text="REMOVEWHEEL" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</place>
-<immediateTransition id="T0" priority="1" type="node" weight="1">
-<graphics orientation="0" x="300" y="180"/>
-<label id="LT0" text="T0" type="text">
+<immediateTransition id="RED_UHG" priority="1" type="node" weight="1">
+<graphics orientation="0" x="270" y="300"/>
+<label id="LRED_UHG" text="RED_UHG" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </immediateTransition>
-<immediateTransition id="T1" priority="1" type="node" weight="1">
-<graphics orientation="0" x="300" y="420"/>
-<label id="LT1" text="T1" type="text">
+<immediateTransition id="UHG_ADH" priority="1" type="node" weight="1">
+<graphics orientation="0" x="600" y="300"/>
+<label id="LUHG_ADH" text="UHG_ADH" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </immediateTransition>
-<immediateTransition id="T2" priority="1" type="node" weight="1">
-<graphics orientation="0" x="570" y="180"/>
-<label id="LT2" text="T2" type="text">
+<immediateTransition id="ADH_RS" priority="1" type="node" weight="1">
+<graphics orientation="0" x="810" y="300"/>
+<label id="LADH_RS" text="ADH_RS" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </immediateTransition>
-<immediateTransition id="T3" priority="1" type="node" weight="1">
-<graphics orientation="0" x="570" y="420"/>
-<label id="LT3" text="T3" type="text">
+<immediateTransition id="RS_RK" priority="1" type="node" weight="1">
+<graphics orientation="0" x="1140" y="300"/>
+<label id="LRS_RK" text="RS_RK" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </immediateTransition>
-<immediateTransition id="T4" priority="1" type="node" weight="1">
-<graphics orientation="0" x="840" y="180"/>
-<label id="LT4" text="T4" type="text">
+<immediateTransition id="RK_RW" priority="1" type="node" weight="1">
+<graphics orientation="0" x="1350" y="300"/>
+<label id="LRK_RW" text="RK_RW" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </immediateTransition>
-<immediateTransition id="T5" priority="1" type="node" weight="1">
-<graphics orientation="0" x="840" y="420"/>
-<label id="LT5" text="T5" type="text">
+<immediateTransition id="RW_DONE" priority="1" type="node" weight="1">
+<graphics orientation="0" x="1550" y="300"/>
+<label id="LRW_DONE" text="RW_DONE" type="text">
 <graphics orientation="0" x="0" y="0"/>
 </label>
 </immediateTransition>
-<immediateTransition id="T6" priority="1" type="node" weight="1">
-<graphics orientation="0" x="1110" y="180"/>
-<label id="LT6" text="T6" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</immediateTransition>
-<immediateTransition id="T7" priority="1" type="node" weight="1">
-<graphics orientation="0" x="1110" y="420"/>
-<label id="LT7" text="T7" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</immediateTransition>
-<immediateTransition id="T8" priority="1" type="node" weight="1">
-<graphics orientation="0" x="1380" y="300"/>
-<label id="LT8" text="T8" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</immediateTransition>
-<immediateTransition id="T9" priority="1" type="node" weight="1">
-<graphics orientation="0" x="705" y="810"/>
-<label id="LT9" text="T9" type="text">
-<graphics orientation="0" x="0" y="0"/>
-</label>
-</immediateTransition>
-<arc fromNode="REMOVEELECTRONICDISPLAY" id="REMOVEELECTRONICDISPLAYtoT0" toNode="T0" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IREMOVEELECTRONICDISPLAYtoT0" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="REMOVEELECTRONICDISPLAY" id="REMOVEELECTRONICDISPLAYtoRED_UHG" toNode="RED_UHG" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IREMOVEELECTRONICDISPLAYtoRED_UHG" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T0" id="T0toUNSCREWFIRSTHANDGRIP" toNode="UNSCREWFIRSTHANDGRIP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT0toUNSCREWFIRSTHANDGRIP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="RED_UHG" id="RED_UHGtoUNSCREWFIRSTHANDGRIP" toNode="UNSCREWFIRSTHANDGRIP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IRED_UHGtoUNSCREWFIRSTHANDGRIP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="REMOVEELECTRONICDISPLAY" id="REMOVEELECTRONICDISPLAYtoT1" toNode="T1" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IREMOVEELECTRONICDISPLAYtoT1" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="RED_UHG" id="RED_UHGtoUNSCREWSECONDHANDGRIP" toNode="UNSCREWSECONDHANDGRIP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IRED_UHGtoUNSCREWSECONDHANDGRIP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T1" id="T1toUNSCREWSECONDHANDGRIP" toNode="UNSCREWSECONDHANDGRIP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT1toUNSCREWSECONDHANDGRIP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="UNSCREWFIRSTHANDGRIP" id="UNSCREWFIRSTHANDGRIPtoUHG_ADH" toNode="UHG_ADH" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IUNSCREWFIRSTHANDGRIPtoUHG_ADH" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="UNSCREWFIRSTHANDGRIP" id="UNSCREWFIRSTHANDGRIPtoT2" toNode="T2" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IUNSCREWFIRSTHANDGRIPtoT2" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="UNSCREWSECONDHANDGRIP" id="UNSCREWSECONDHANDGRIPtoUHG_ADH" toNode="UHG_ADH" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IUNSCREWSECONDHANDGRIPtoUHG_ADH" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="UNSCREWSECONDHANDGRIP" id="UNSCREWSECONDHANDGRIPtoT3" toNode="T3" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IUNSCREWSECONDHANDGRIPtoT3" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="UHG_ADH" id="UHG_ADHtoATTACHDRILLHEAD" toNode="ATTACHDRILLHEAD" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IUHG_ADHtoATTACHDRILLHEAD" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T2" id="T2toATTACHDRILLHEAD" toNode="ATTACHDRILLHEAD" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT2toATTACHDRILLHEAD" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="ATTACHDRILLHEAD" id="ATTACHDRILLHEADtoADH_RS" toNode="ADH_RS" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IATTACHDRILLHEADtoADH_RS" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T3" id="T3toATTACHDRILLHEAD" toNode="ATTACHDRILLHEAD" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT3toATTACHDRILLHEAD" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="ADH_RS" id="ADH_RStoREMOVEFIRSTSTEP" toNode="REMOVEFIRSTSTEP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IADH_RStoREMOVEFIRSTSTEP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="ATTACHDRILLHEAD" id="ATTACHDRILLHEADtoT4" toNode="T4" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IATTACHDRILLHEADtoT4" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="ADH_RS" id="ADH_RStoREMOVESECONDSTEP" toNode="REMOVESECONDSTEP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IADH_RStoREMOVESECONDSTEP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="ATTACHDRILLHEAD" id="ATTACHDRILLHEADtoT5" toNode="T5" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IATTACHDRILLHEADtoT5" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="REMOVEFIRSTSTEP" id="REMOVEFIRSTSTEPtoRS_RK" toNode="RS_RK" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IREMOVEFIRSTSTEPtoRS_RK" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T5" id="T5toREMOVESECONDSTEP" toNode="REMOVESECONDSTEP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT5toREMOVESECONDSTEP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="REMOVESECONDSTEP" id="REMOVESECONDSTEPtoRS_RK" toNode="RS_RK" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IREMOVESECONDSTEPtoRS_RK" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T4" id="T4toREMOVEFIRSTSTEP" toNode="REMOVEFIRSTSTEP" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT4toREMOVEFIRSTSTEP" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="RS_RK" id="RS_RKtoREMOVEKNOB" toNode="REMOVEKNOB" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IRS_RKtoREMOVEKNOB" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="REMOVEFIRSTSTEP" id="REMOVEFIRSTSTEPtoT6" toNode="T6" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IREMOVEFIRSTSTEPtoT6" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="REMOVEKNOB" id="REMOVEKNOBtoRK_RW" toNode="RK_RW" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IREMOVEKNOBtoRK_RW" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T6" id="T6toREMOVEKNOB" toNode="REMOVEKNOB" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT6toREMOVEKNOB" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="RK_RW" id="RK_RWtoREMOVEWHEEL" toNode="REMOVEWHEEL" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IRK_RWtoREMOVEWHEEL" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="REMOVESECONDSTEP" id="REMOVESECONDSTEPtoT7" toNode="T7" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IREMOVESECONDSTEPtoT7" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="REMOVEWHEEL" id="REMOVEWHEELtoRW_DONE" toNode="RW_DONE" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IREMOVEWHEELtoRW_DONE" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
-<arc fromNode="T7" id="T7toREMOVEKNOB" toNode="REMOVEKNOB" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT7toREMOVEKNOB" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
-<graphics x="0" y="0"/>
-</inscription>
-</arc>
-<arc fromNode="REMOVEKNOB" id="REMOVEKNOBtoT8" toNode="T8" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IREMOVEKNOBtoT8" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
-<graphics x="0" y="0"/>
-</inscription>
-</arc>
-<arc fromNode="T8" id="T8toREMOVEWHEEL" toNode="REMOVEWHEEL" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT8toREMOVEWHEEL" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
-<graphics x="0" y="0"/>
-</inscription>
-</arc>
-<arc fromNode="REMOVEWHEEL" id="REMOVEWHEELtoT9" toNode="T9" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IREMOVEWHEELtoT9" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
-<graphics x="0" y="0"/>
-</inscription>
-</arc>
-<arc fromNode="T9" id="T9toREMOVEELECTRONICDISPLAY" toNode="REMOVEELECTRONICDISPLAY" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
-<inscription id="IT9toREMOVEELECTRONICDISPLAY" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
+<arc fromNode="RW_DONE" id="RW_DONEtoDONE" toNode="DONE" type="connector" weight="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]">
+<inscription id="IRW_DONEtoDONE" text="[pipe.views.MarkingView[,0,0,0x0,invalid,alignmentX=0.0,alignmentY=0.0,border=,flags=0,maximumSize=,minimumSize=,preferredSize=]]" type="inscriptionText">
 <graphics x="0" y="0"/>
 </inscription>
 </arc>
