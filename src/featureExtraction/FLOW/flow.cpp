@@ -3,7 +3,7 @@
 int num_actions = 8;
 int show_track = 0;
 int fps = 20;
-int trajectory_length = fps/2;
+int trajectory_length = fps/4;
 
 
 string inttostring(int num) {
@@ -22,6 +22,9 @@ void outputOpticalFlow(string outdir, string vidname, string segname) {
 	int start_frame;
 	segments >> start_frame;
 	start_frame *= fps;
+	if (start_frame == 0) {
+		start_frame = 1;
+	}
 
 	int end_frame;
 	segments >> end_frame;
@@ -69,21 +72,6 @@ void outputOpticalFlow(string outdir, string vidname, string segname) {
 		}
 
 		Mat aframe;
-
-		// do nothing for dead time before start of first action
-		// do nothing for middle frames
-		if ((frame_num) % trajectory_length != 0
-					|| frame_num < start_frame) {
-			// get a new frame
-			capture >> aframe;
-			if(aframe.empty())
-				break;
-			
-			//cout << "skipping frame " << frame_num << endl;
-			frame_num++;
-			continue;
-		}
-
 		capture >> aframe;
 		Mat frame = aframe(Rect(0,0,1280,480));
 
@@ -99,6 +87,19 @@ void outputOpticalFlow(string outdir, string vidname, string segname) {
 			cornerSubPix(prev_grey, features_prev, subPixWinSize, Size(-1,-1), criteria);
 
 			cerr << "\t\tfirst frame of action " << action << endl;
+			frame_num++;
+			continue;
+		}
+
+
+
+		// do nothing for dead time before start of first action
+		// do nothing for middle frames
+		if ((frame_num) % trajectory_length != 0
+					|| frame_num < start_frame) {
+			if(frame.empty())
+				break;		
+			//cout << "skipping frame " << frame_num << endl;
 			frame_num++;
 			continue;
 		}
@@ -154,7 +155,6 @@ int main(int argc, char** argv)
 
 	string prefixfolder = "../../../data/";
 	// Half a second if fps = 20
-	int trajectory_length = 10;
 
 	char* vids_to_process = argv[1];
 	ifstream vids;
