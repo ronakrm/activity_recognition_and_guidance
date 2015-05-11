@@ -1,4 +1,4 @@
-function [max_likelihood, max_index, likelihoods] = testLikelihood(models, sequence)
+function [max_likelihood, max_index, likelihoods] = testLikelihood(models, sequence, weights)
 %   Obtains the log liklihood of a model fitting a set of observation
 %   symbols
 
@@ -17,6 +17,9 @@ function [max_likelihood, max_index, likelihoods] = testLikelihood(models, seque
             models(i).transmat, models(i).obsmat);
     
     end
+    
+    %weight actions based on weights by petri net
+    likelihoods = likelihoods.*weights;
     
     % return the maximum likelihood and the action that yielded it
     [max_likelihood, max_index] = max(likelihoods);

@@ -1,0 +1,125 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+ 
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=true,bookmarksnumbered=true,hypertexnames=false,linkbordercolor={0 0 1}]{hyperref}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+%\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{1}
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{Dynamical Models for Instruction Completion \\and Error Recognition for NASA Physical Procedures}
+
+\author{Steven Johnson\\
+	Department of Computer Sciences\\
+	University of Wisconsin--Madison\\
+	{\tt\small sjj@cs.wisc.edu}
+	\and
+	Ronak Mehta\\
+	Department of Computer Sciences\\
+	University of Wisconsin-Madison\\
+	{\tt\small ronakrm@cs.wisc.edu}
+	\and
+	John Cabaj\\
+	Department of Electrical and Computer Engineering\\
+	University of Wisconsin-Madison\\
+	{\tt\small cabaj@wisc.edu}
+}
+
+\maketitle
+%\thispagestyle{empty}
+
+%%%%%%%%% ABSTRACT
+\begin{abstract}
+
+\end{abstract}
+
+%%%%%%%%% BODY TEXT
+\section{Introduction}
+
+Procedures are the accepted means to operate a spacecraft system or systems to perform specific functions, and consequently are at the heart of all NASA human spaceflight operations~\cite{kortenkamp2008procedure}. A procedure is a detailed set of instructions specifying how a piece of equipment is operated or a task is performed~\cite{frank2010plans}. They are often written to be very general and to cover numerous contingencies. Procedures to operate a class of equipment (e.g., smoke detector) will differ based on make, while procedures to operate a piece of equipment will have conditional or optional steps based on configuration. As an additional complication, constraints of some procedures may be highly conditional, discretionary, or unordered. At the same time, there may be external constraints that limit how a procedure must be executed, and these constraints are not made explicit. The outcomes of NASA missions rely on crew members properly executing a multitude of these complex procedures, making procedure execution support and monitoring a critical factor that can determine success or failure measured both in terms of monetary costs as well as preventing loss of life.
+
+There is a body of prior NASA work focused on monitoring the progress of procedures that are not physical. For instance, when instructions to systems of the ISS are sent from ground, the application ThinLayer highlights commands as they are executed to show procedure progress~\cite{frank2010plans}. IPV itself also allows for manually tracking procedure progress for a crew person onboard ISS. However, to date there is little work from NASA in the realm of tracking execution status of physical procedures where crew members are manually manipulating physical objects, such as during maintenance tasks. Our goal with this work is to develop a method to computationally model a procedure to enable tracking of the execution of its steps and detection of crew errors during physical execution.
+
+%outline of paper TODO
+
+\section{Related Work}
+
+Significant work has been done in the field of human action and activity recognition. In \cite{turaga2008machine}, Turaga presents a comprehensive overview of this work in detail. In most work, activity recognition is identified as the sum of \emph{actions} performed in a temporal ordering. Parametric models, particularly Hidden Markov Models, have been used with success in many action recognition applications. \cite{yamato1992recognizing} employ them to identify whole-body tennis swings. Using background subtraction, they are able to identify the actor in the scene, and learn a model based on how the actor alone is moving over time. The particular advantage of HMMs in the field of vision lies in their efficiency in modeling time-sequential data.
+
+
+
+-activity recognition
+-action recognition
+-egocentric
+
+%------------------------------------------------------------------------
+\section{coold-word-adj cool-word-noun pipeline}
+
+
+\subsection{Feature Representation}
+optical flow lucas kanade
+histograms (HOOF)
+
+\subsection{Codebook Generation}
+kmeans on HOOF
+
+
+%-------------------------------------------------------------------------
+\subsection{Hidden Markov Models}
+
+
+%-------------------------------------------------------------------------
+\subsection{Petri Network}
+-simulation
+
+%------------------------------------------------------------------------
+\section{Experimental Evaluation}
+
+-task description/outline
+-data acquisition
+
+\section{Discussion and Future Work}
+
+feature representation problematic
+-flow not good for egocentric
+-other work has used object detection
+	-time limitation prevented us from training detectors and creating the training data
+	-future work
+
+
+\section{Conclusion}
+
+
+
+{\small
+\bibliographystyle{ieee}
+\bibliography{CS766_final_report}
+}
+
+
+\end{document}

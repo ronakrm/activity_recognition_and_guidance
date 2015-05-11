@@ -12,7 +12,7 @@ function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, 
 % THESE ARE ALSO CODED INTO gridSearcher!! Make sure to change there
 % also!
 % initialize constraints
-numVideos = 10;
+numVideos = 30;
 numActions = 8;
 
 % initialize hoof parameters
@@ -57,11 +57,12 @@ for i = 1 : numVideos
     
     % test each action of the testing set video on the HMM models
     for j = 1 : numActions
-        
+        poss_actions = simPetri(j);
+        weights = ones(numActions,1);
+        weights(poss_actions) = 0.98;
         % find which action was recognized
-        [max_likelihood, max_index, likelihoods] = testLikelihood(models, testSet(j));
-        likelihoods;
-        
+        [max_likelihood, max_index, likelihoods] = testLikelihood(models, testSet(j), weights);
+
         % if the correct action was recognized
         if(max_index == j)
             actionAccuracies(j) = actionAccuracies(j) + 1;
