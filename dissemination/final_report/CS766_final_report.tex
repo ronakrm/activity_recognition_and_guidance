@@ -6,6 +6,8 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{gensymb}
+
 
 % Include other packages here, before hyperref.
 
@@ -100,12 +102,34 @@ JOHN
 JOHN
 %------------------------------------------------------------------------
 \section{Experimental Evaluation}
-STEVE
-\subsection{Dataset}
-STEVE
 
--task description/outline
--data acquisition
+We evaluated our proposed TODO pipeline in a number of experiments. Below we describe our dataset, which was constructed based off of an actual NASA procedure and related constraints. Additionally, we describe the acquisition of the dataset following by the results of classification experiments with and without use of the Petri Network.
+
+\subsection{Dataset}
+
+Frank et al.~\cite{frank2013autonomous} describe several physical procedures frequently conducted on the International Space Station (ISS). One of these procedures is the Interim Resistive Exercise Device (iRED) Inspection and Cleaning task. This procedure involves crew disassembling the piece of exercise equipment, inspecting and cleaning the inner parts, capturing and sending inspection photos to ground control, and then reassembling the device. We based the task we created on this procedure.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{fig/equipment.png}
+    \caption{The piece of exercise equipment and tools we used in the task to create our dataset.}
+    \label{fig:equipment}
+    %\vspace{-16pt}
+\end{figure}
+
+The piece of exercise equipment we used for our task is shown on the left in Figure~\ref{fig:equipment} with the necessary tools shown on the right. The complete disassembly, photographing, and reassembly task consists of 66 actions. However, we used only the first eight actions of the disassembly portion of the task in our dataset. This task therefore consisted of 1) removing an electronic display, 2 and 3) removing two resistance cords, 4) attaching the proper drill bit to an electronic screwdriver, 5 and 6) removing the two steps, 7) unscrewing by hand a resistance knob, and 8) detaching a wheel. This task involves a mixture of tool use and hand manipulation of components of a variety of parts on the exercise device. It therefore requires a large amount of participant mobility.
+
+For the data collection, each participant executed the disassembly procedure with the instructions for the procedure delivered via a prototype task support system developed on the Google Glass\footnote{\href{http://en.wikipedia.org/wiki/Google_Glass}{http://en.wikipedia.org/wiki/Google\_Glass}} Platform, a lightweight head-mounted display device. These types of task guidance systems are being developed in other work, but this system provides a good platform for the acquisition of egocentric video information captured from the Glass device's camera, so it was selected for this purpose. The device was modified slightly to better capture the salient visual content of the task execution. The modified device is shown in Figure~\ref{fig:glass}. We attached a mirror  at an angle of approximately 25$\degree$ from level to the device with a 3D printed mount. When manipulating objects with the hands in front of themselves, most people both tilt their heads downward slightly and look downward with their eyes. The head-mounted camera will move with the head tilt, and the mirror helps to correct for the additional downward direction contributed by eye movements. A sample frame captured from the egocentric camera and mirror during the task is shown in Figure~\ref{fig:TODOframe}.
+
+\begin{figure}[!b]
+    \centering
+    \includegraphics[width=\columnwidth]{fig/glass.png}
+    \caption{The modified Google Glass device we used to capture the video for our dataset. The attached mirror helps to capture manipulations of objects directly in front of the procedure executor.}
+    \label{fig:glass}
+    %\vspace{-16pt}
+\end{figure}
+
+Each of the authors executed the eight actions of the exercise procedure ten times, resulting in our dataset of 30 egocentric videos of the same task. The authors had varying degrees of prior knowledge of the procedure, so the data consists of procedure executors of multiple levels of skill, resulting in a variety of techniques and times needed to execute the procedure. For example, one author had no knowledge of the procedure, and therefore initially relied completely on the task guidance delivered by the Glass device to preform the procedure. By the end of his tenth execution, he had internalized the procedure, eliminating the need for the assistance device, and was significantly faster than before. His set of ten videos, therefore, has him performing at a continuum of expertise levels as he increased in familiarity with the procedure. Thus, while there were only three participants included in the dataset, we believe there is still ample variety in the data and that testing with this data will generalize to other executors of the same procedure. Each of the actions in the video was segmented by hand to use for training and testing purposes in the classification.
 
 \subsection{Results}
 STEVE 
