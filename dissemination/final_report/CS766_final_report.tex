@@ -129,14 +129,22 @@ For the data collection, each participant executed the disassembly procedure wit
     %\vspace{-16pt}
 \end{figure}
 
-Each of the authors executed the eight actions of the exercise procedure ten times, resulting in our dataset of 30 egocentric videos of the same task. The authors had varying degrees of prior knowledge of the procedure, so the data consists of procedure executors of multiple levels of skill, resulting in a variety of techniques and times needed to execute the procedure. For example, one author had no knowledge of the procedure, and therefore initially relied completely on the task guidance delivered by the Glass device to preform the procedure. By the end of his tenth execution, he had internalized the procedure, eliminating the need for the assistance device, and was significantly faster than before. His set of ten videos, therefore, has him performing at a continuum of expertise levels as he increased in familiarity with the procedure. Thus, while there were only three participants included in the dataset, we believe there is still ample variety in the data and that testing with this data will generalize to other executors of the same procedure. Each of the actions in the video was segmented by hand to use for training and testing purposes in the classification.
+Each of the authors executed the eight actions of the exercise procedure ten times, resulting in our dataset of 30 egocentric videos of the same task. The authors had varying degrees of prior knowledge of the procedure, so the data consists of procedure executors of multiple levels of skill, resulting in a variety of techniques and times needed to execute the procedure. For example, one author had no knowledge of the procedure, and therefore initially relied completely on the task guidance delivered by the Glass device to preform the procedure. By the end of his tenth execution, he had internalized the procedure, eliminating the need for the assistance device, and was significantly faster than before. His set of ten videos, therefore, has him performing at a continuum of expertise levels as he increased in familiarity with the procedure. Thus, while there were only three participants included in the dataset, we believe there is still ample variety in the dataset and that testing with this data will generalize to other executors of the same procedure. Each of the actions in the video was segmented by hand to use for training and testing purposes in the classification.
 
 \subsection{Results}
-STEVE 
 
--cross validation
--grid search
+We evaluated our pipeline in a number of experiments using our exercise equipment disassembly dataset. In the following paragraphs we discuss the methodology used in our grid search of the pipeline parameters and the resulting accuracies.
 
+We performed a grid search manipulating the following parameters: 1) the number of bins used in the HOOF histogram binning, 2) the size of the the codebook of HOOF features, and 3) the number of states in the HMMs. To evaluate each parameter configuration, we used a leave-one-out cross validation technique where 29 of the 30 videos were used to generate the codebook and train the HMMs. The actions of the last video were then each passed through the pipeline and the predicted action was the one which had the highest probability from the set of HMMs. The results using the Petri Network of the task used a weighting factor of 0.98. In all cases, random number generation was seeded such that k-means and the HMMs will produce repeatable results. Additionally, both of these processes were run with enough iterations to ensure convergence. To evaluate the accuracies of predicting each action for each configuration, we averaged (by action) these 30 accuracy results to determine a configuration accuracy. The results for some of the parameter configurations are shown in Table~\ref{tab:results}.
+ 
+ \begin{table}[!tp]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/TODO.pdf}
+	\caption{TODO Configuration accuracy results for each action for a subset of the grid search.}
+	\label{tab:results}
+\end{table}
+
+While these accuracies are not spectacular, they are still significant in that random chance would put the accuracy at 0.125. Additionally, these results are comparable to accuracies in prior work that also use an egocentric camera~\cite{TODO-RONAK}. In the next section we discuss the challenges we discovered with our technique and the implications for future methods to improve the results of real-time prediction of actions from egocentric cameras.
 
 \section{Discussion and Future Work}
 
