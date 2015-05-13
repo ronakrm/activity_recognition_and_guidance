@@ -102,8 +102,9 @@ Features were tracked over half-second periods. Given our domain knowledge, we e
 Once features have been extracted, Histograms of Optical Flow (HOF) were generated for each half-second interval. We might expect subactions over these intervals to range from being relatively obvious to fairly subtle, and as such performed a grid search over the number of bins.
 
 \subsection{Codebook Generation}
-kmeans on HOOF
-RONAK
+During the training phase, a codebook was generated to represent subactions from which an action could be comprised of. Using the binned feature representations from above, k-means clustering was performed on all features extracted from all training datasets. These clusters were used as the symbols passed forward to the Hidden Markov Model.
+
+During testing, each half-second feature was queried for the cluster closest to it, and that cluster ID was used as the symbol for state estimation. Because our domain implies similar movements across multiple instances of a single action, we expect that this method should result in reasonably accurate cluster assignments.
 
 %-------------------------------------------------------------------------
 \subsection{Hidden Markov Models}
