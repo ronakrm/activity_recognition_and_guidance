@@ -71,23 +71,36 @@ There is a body of prior NASA work focused on monitoring the progress of procedu
 
 \section{Related Work}
 
-Significant work has been done in the field of human action and activity recognition. In \cite{turaga2008machine}, Turaga presents a comprehensive overview of this work in detail. In most work, activity recognition is identified as the sum of \emph{actions} performed in a temporal ordering. Parametric models, particularly Hidden Markov Models, have been used with success in many action recognition applications. \cite{yamato1992recognizing} employ them to identify whole-body tennis swings. Using background subtraction, they are able to identify the actor in the scene, and learn a model based on how the actor alone is moving over time. The particular advantage of HMMs in the field of vision lies in their efficiency in modeling time-sequential data.
+Significant work has been done in the field of human action and activity recognition. Turaga et al.~\cite{turaga2008machine} presents a comprehensive overview of this work in detail. In most work, activity recognition is identified as the sum of \emph{actions} performed in a temporal ordering. Parametric models, particularly Hidden Markov Models, have been used with success in many action recognition applications. Yamato et al.~\cite{yamato1992recognizing} employ them to identify whole-body tennis swings. Using background subtraction, they are able to identify the actor in the scene, and learn a model based on how the actor alone is moving over time.
 
+The particular advantage of HMMs in the field of vision lies in their efficiency in modeling time-sequential data. Because the underlying representation of an HMM essentially encodes a state machine, they lend themselves nicely to modeling actions. Actions are composed of sequential time-varying video frames, and the model creates a representation with "probabilistic jumps" from one state to another. \cite{turaga2008machine}.
 
-RONAK
--activity recognition
--action recognition
--egocentric
+There has been some work in developing HMM formalisms that incorporate domain knowledge as well. Moore et al.~\cite{moore1999exploiting} created a framework combining both HMMs and object detection modules to extract interaction information HMMs alone could not identify. Chen et al.~\cite{chen2003hand}, HMMs are used in conjunction with specific feature extraction methods to recognize hand gestures.
+
+While the above works have been significantly expanded upon, all of that effort has been under the assumption of a third-person view of the action, where the camera is removed from the scene. In our setup, our observation of the underlying scene occurs from an egocentric viewpoint. Egocentric cameras present their own unique affordances, and come with their own unique problems. Technological advances have only recently begun to make common use of egocentric cameras a reality, and as such their is a limited existing body of work to use as a foundation.
+
+Though this does prove to be an interesting challenge, the task of instruction completion and error recognition provides us with significant domain knowledge. Rather than having a classification problem in which an unknown task is to be identified, we have significant knowledge of what has already been completed, what the correct next action should look like, and what error states look like. It is this knowledge that we hope to incorporate into our model.
+
+In this way, we employ the concept of \emph{activity} recognition, coupled with our action recognition. We model the entire activity as a set of actions completed in a specific order. To this end, Petri Nets~\cite{petri1966communication} appear to apply quite well. The graphical model format, along with the unique properties of sequencing, concurrency, synchronization, and resource sharing\cite{david1994petri} that Petri Nets provide allow for a complete high-level representation of the activity. Incorporating the entire procedure in the form of a Petri Net, coupled with the lower-level HMM, we hope to create a system which will allow for effective instruction completion and error recognition.
 
 %------------------------------------------------------------------------
 
-\section{coold-word-adj cool-word-noun pipeline}
-RONAK
+\section{Feature-Action-Activity Pipeline}
+Because of our novel combination of a variety of vision and machine learning methods, a pipeline was developed to afford fast and efficient processing of raw video data directly through to the learning process.
+
+During the training stage, low-level features are extracted from training videos and binned. These features are then clustered to create symbol representations, and sequences of these symbols are used as training data for the Hidden Markov Models.
 
 \subsection{Feature Representation}
-optical flow lucas kanade
-histograms (HOOF)
-RONAK
+In recent years dense trajectories~\cite{wang2011action} has proven to be the most accurate feature representation for action recognition. While their combined representation leads to strong results, the downside is the computational complexity. In order to provide reasonable notification of an erroneous action, our system needs to be as close to real-time as possible, on reasonable hardware. While much of the computation can be offloaded to a server, in environments similar to the ISS such computation can still be costly.
+
+With this motivation, we solely make use of optical flow as our low-level feature representation. Wang et al.~\cite{wang2011action} show strong results using only optical flow, and there is some heritage in using it for action recognition~\cite{chaudhry2009histograms}.
+
+To obtain the keypoints in the video frames, Lucas-Kanade feature tracking was used to obtain the flow between frames. Bouguet's pyramidal implementation~\cite{bouguet2001pyramidal} allows for features to be tracked across scales, while still being reasonably fast in its extraction.
+
+Features were tracked over half-second periods. Given our domain knowledge, we expect an action to take time on the order of 10 seconds to 1 minute, and as such expect half-second features will provide adequate information to describe the entire period.
+
+Once features have been extracted, Histograms of Optical Flow (HOF) were generated for each half-second interval. We might expect subactions over these intervals to range from being relatively obvious to fairly subtle, and as such performed a grid search over the number of bins.
+
 \subsection{Codebook Generation}
 kmeans on HOOF
 RONAK
@@ -137,12 +150,12 @@ We evaluated our pipeline in a number of experiments using our exercise equipmen
 
 We performed a grid search manipulating the following parameters: 1) the number of bins used in the HOOF histogram binning, 2) the size of the the codebook of HOOF features, and 3) the number of states in the HMMs. To evaluate each parameter configuration, we used a leave-one-out cross validation technique where 29 of the 30 videos were used to generate the codebook and train the HMMs. The actions of the last video were then each passed through the pipeline and the predicted action was the one which had the highest probability from the set of HMMs. The results using the Petri Network of the task used a weighting factor of 0.98. In all cases, random number generation was seeded such that k-means and the HMMs will produce repeatable results. Additionally, both of these processes were run with enough iterations to ensure convergence. To evaluate the accuracies of predicting each action for each configuration, we averaged (by action) these 30 accuracy results to determine a configuration accuracy. The results for some of the parameter configurations are shown in Table~\ref{tab:results}.
  
- \begin{table}[!tp]
-	\centering
-	\includegraphics[width=\columnwidth]{figures/TODO.pdf}
-	\caption{TODO Configuration accuracy results for each action for a subset of the grid search.}
-	\label{tab:results}
-\end{table}
+%\begin{table}[!tp]
+%	\centering
+%	\includegraphics[width=\columnwidth]{figures/TODO.JPG}
+%	\caption{TODO Configuration accuracy results for each action for a subset of the grid search.}
+%	\label{tab:results}
+%\end{table}
 
 While these accuracies are not spectacular, they are still significant in that random chance would put the accuracy at 0.125. Additionally, these results are comparable to accuracies in prior work that also use an egocentric camera~\cite{TODO-RONAK}. In the next section we discuss the challenges we discovered with our technique and the implications for future methods to improve the results of real-time prediction of actions from egocentric cameras.
 
@@ -154,7 +167,10 @@ feature representation problematic
 	-time limitation prevented us from training detectors and creating the training data
 	-future work
 RONAK
-
+ Fathi et al.~\cite{fathi2011understanding} have 
+ 
+ camera encoding more scene information
+ 
 \section{Conclusion}
 
 
