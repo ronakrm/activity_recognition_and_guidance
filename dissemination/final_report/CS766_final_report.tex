@@ -118,8 +118,14 @@ For classification given observed sequences of testing data, the likelihood of e
 
 %-------------------------------------------------------------------------
 \subsection{Petri Network}
+Petri Net modeling was used as a means of modeling the task as a series of activities to be completed to achieve the classification of the task as a whole. Petri Nets were first introduced by Carl Adam Petri\cite{petri1962kommunikation}. Petri Nets are represented by a bipartite graph that represent states that you can be in, called places, as well as arcs  from place to place, known as transitions. When in a given state, there are any number of tokens in that state representing that the place is the current place. When a state can transition to another, the transition is said to fire, whereupon we advance to a different place and another set of transitions can be enabled. 
+
+In this standard definition of Petri Nets, one can model behavior similar to a Finite State Machine. Given the nature of an assigned task, with domain knowledge, this scales with our model very well as we have several known activities that must be completed before the task as a whole can be deemed complete. For our puroposes, each place represents the fact that we are currently waiting for a specific activity to be recoginzed, while a transition represents that a transition from one place to another indicates that an actvity was detected, and the task has progressed to the next stage overall.
+
+In this basic set up, we simply defined the layout of our Petri Net **********INSERT PICTURE************** Using the known struture of the Petri Net, the activity classifications are passed off from the HMM models' outputs. When the likelihood of an action is greater than a threshold, we can say that the activity was observed, and the Petri Net should advance accordingly. When all necessary transitions to perform the task are satisfied, we can say with confidence that the task was completed based on the series of activities observed. Petri Net modeling was achieved using GPenSIM\cite{davidrajuh2010gpensim}.
+
+
 -simulation
-JOHN
 %------------------------------------------------------------------------
 \section{Experimental Evaluation}
 
