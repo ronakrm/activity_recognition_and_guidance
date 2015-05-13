@@ -19,6 +19,12 @@
 using namespace cv;
 using namespace std;
 
+// hyperparameters for this specific project
+int num_actions = 8;
+int show_track = 0;
+int fps = 20;
+int trajectory_length = fps/4;
+
 // parameters for tracking
 double quality = 0.001;
 int min_distance = 10;
