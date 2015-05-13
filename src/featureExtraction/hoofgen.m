@@ -1,11 +1,13 @@
-% this sits outside the data directory
-% optical flow files are in data/v1/f1/f123.txt, for example
+% Note: this sits outside the data directory
+%       optical flow files are in data/v1/f1/f123.txt, for example
 
-% create HOOF features for videos videoStartNum through videoEndNum,
-% inclusive. assumes that optical flow follow the structure above and are
-% already created. also clusters them according to the input number of
-% clusters using k-means to generate the symbols for the HMM.
 function hoofgen(numVideos, numActions, numBins)
+%   Creates HOOF features for videos 1 through numVideos. 
+%
+%   Inputs:
+%       numVideos - the total number of videos
+%       numActions - the number of actions in the classification set
+%       numBins - the number of bins used in the HOOF feature generation
 
 pathToData = '../../data/';
 
