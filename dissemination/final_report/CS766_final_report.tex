@@ -162,15 +162,21 @@ While these accuracies are not spectacular, they are still significant in that r
 
 \section{Discussion and Future Work}
 
-feature representation problematic
--flow not good for egocentric
--other work has used object detection
-	-time limitation prevented us from training detectors and creating the training data
-	-future work
-RONAK
- Fathi et al.~\cite{fathi2011understanding} have 
- 
- camera encoding more scene information
+While we were able to see the results of our pipeline, we expect there may be strong reasons for which our classification accuracy is not high. Due to time limitations, we were not able to further explore these issues, but they may prove to be valuable as future work.
+
+\subsection{Diversity and Quantity of Training Data}
+
+Though we were able to simulate the training data that may be obtained in an actual application of our work, during our testing we found misclassification issues that could be directly attributed to our training data. In many cases, the cluster sequences chosen for a particular test action were completely dissimilar to sequences that that action's HMM was trained on. While in a real-world streamed-data setting we might expect this, in our controlled experiment it seems to indicate our model is very susceptible to slight variations.
+
+For this reason, we think our training data may be too similar. More diverse training data may allow for less overfitting, and create looser feature-cluster associations. In the same vein we note the small size of our dataset. Because of the requirement that we have a formal model of the activity being performed, we were required to create our own. Many learning methods require a large amount of data to create accurate predictions. Future work might include expanding and diversifying the training data, in a way that will allow the learning models to better generalize from training to testing.
+
+\subsection{Low-Level Feature Representation}
+
+While results from using Histograms of Optical Flow have been significant in the previous work cited above, we were not able to reach similar results even when attempting a one-vs.-all classification for each action. While the training data limitations would affect this, we expect an issue with our feature representation.
+
+In our unique setup with an egocentric camera, we found that head movement tends to dominate any flow features found within the scene itself. Head movement was not controlled for at all during data acquisition, and as such head movement varied significantly across actions and across videos. Because these flows were primarily capturing this movement, we may have been learning models for head movement rather than the action in the scene.
+
+For this reason we expect more work needs to be done in feature extraction in this domain. Theoretically our learning methods are sound, and given the right representation we expect much higher results. Some work has been done by Fathi et al.~\cite{fathi2011understanding} in the realm of egocentric video, but their implementations prove to be too slow for our activity guidance task. Future work might include incorporating object detection into the model, and using only the flow of tracked objects. Background subtraction and head movement compensation could also be explored as a means to increase the signal of the scene relative to head movement.
  
 \section{Conclusion}
 
