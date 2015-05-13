@@ -122,14 +122,22 @@ Petri Net modeling was used as a means of modeling the task as a series of activ
 
 In this standard definition of Petri Nets, one can model behavior similar to a Finite State Machine. Given the nature of an assigned task, with domain knowledge, this scales with our model very well as we have several known activities that must be completed before the task as a whole can be deemed complete. For our puroposes, each place represents the fact that we are currently waiting for a specific activity to be recoginzed, while a transition represents that a transition from one place to another indicates that an actvity was detected, and the task has progressed to the next stage overall.
 
-In this basic set up, we simply defined the layout of our Petri Net **********INSERT PICTURE************** Using the known struture of the Petri Net, the activity classifications are passed off from the HMM models' outputs. When the likelihood of an action is greater than a threshold, we can say that the activity was observed, and the Petri Net should advance accordingly. When all necessary transitions to perform the task are satisfied, we can say with confidence that the task was completed based on the series of activities observed. Petri Net modeling was achieved using GPenSIM\cite{davidrajuh2010gpensim}.
+In this basic set up, we simply defined the layout of our Petri Net as shown in Figure~\ref{fig:petri}. Using the known structure of the Petri Net, the activity classifications are passed off from the HMM models' outputs. When the likelihood of an action is greater than a threshold, we can say that the activity was observed, and the Petri Net should advance accordingly. When all necessary transitions to perform the task are satisfied, we can say with confidence that the task was completed based on the series of activities observed. Petri Net modeling was achieved using GPenSIM\cite{davidrajuh2010gpensim}.
+
+\begin{figure*}[t]
+	%\vspace{-7pt}
+    \centering
+    \includegraphics[width=7.1in]{fig/petri.png}
+    \caption{The Petri Net structure for the eight actions used in the disassembly task.}
+    \label{fig:petri}
+\end{figure*}
 
 
 -simulation
 %------------------------------------------------------------------------
 \section{Experimental Evaluation}
 
-We evaluated our proposed TODO pipeline in a number of experiments. Below we describe our dataset, which was constructed based off of an actual NASA procedure and related constraints. Additionally, we describe the acquisition of the dataset following by the results of classification experiments with and without use of the Petri Network.
+We evaluated our proposed Feature-Action-Activity pipeline in a number of experiments. Below we describe our dataset, which was constructed based off of an actual NASA procedure and related constraints. Additionally, we describe the acquisition of the dataset following by the results of classification experiments with and without use of the Petri Network.
 
 \subsection{Dataset}
 
