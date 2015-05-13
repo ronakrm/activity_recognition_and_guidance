@@ -108,7 +108,13 @@ During testing, each half-second feature was queried for the cluster closest to 
 
 %-------------------------------------------------------------------------
 \subsection{Hidden Markov Models}
-JOHN
+Classification of the assigned task required that each of the actions that made up the tasks must be recognized to determine whether or not instructions had been completely incremenetally. To achieve classification of individual actions, a HMM (Hidden Markov Model) implementation was used. Markov Models are essentially a graph structure that represent states of an input sequence probabalistically. Given a known set of possible observed symbols and states, the model can determine the probability of a transition from one state to another given an input sequence.
+
+Given that the state sequences of the optical flow features could not be determined in advance, a Hidden Markov Model was trained. A HMM has no knowledge of the state topology that was used to generate an output sequence. However, a HMM can be trained based on instances of observed sequences using an Expectation-Maximization algorithm. The most commonly used is the Baum-Welch algorithm\cite{welch2003hidden}. To simplify the HMM implementation, discrete output sequences were assumed and achieved by means of codebook generation. When a new HOOF feature is generated from optical flow, the nearest cluster center from the codebook classifies each flow. This cluster center roughly maps to a subaction of the activity being performed. An activity is made up of many optical flows over many frames, thus finding the closest cluster centers provides a symbol of roughly which subaction occurred in the activity as a whole. Using such a method allowed for discrete HMMs to be used.
+
+For action recognition, one HMM will model a single action. As the task used for testing had eight activities, eight HMMs had to be trained for action recognition. All eight models were initialized with random parameters for the transition probabilities and emission states. Training data was seqmented into only instances of a single activity for HMM training. The Baum-Welch algorithm was then used to train a single HMM model based on all observed sequences of an activity using the training data. The likelihood of the model reqpresenting the observed sequences is calculated in every iteration until the likelihood converges. This occurs for all eight HMMs used to classify all eight activities until the models parameters have converged and the HMMs are built.
+
+
 
 %-------------------------------------------------------------------------
 \subsection{Petri Network}
