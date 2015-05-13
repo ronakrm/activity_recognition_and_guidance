@@ -114,7 +114,7 @@ Given that the state sequences of the optical flow features could not be determi
 
 For action recognition, one HMM will model a single action. As the task used for testing had eight activities, eight HMMs had to be trained for action recognition. All eight models were initialized with random parameters for the transition probabilities and emission states. Training data was seqmented into only instances of a single activity for HMM training. The Baum-Welch algorithm was then used to train a single HMM model based on all observed sequences of an activity using the training data. The likelihood of the model reqpresenting the observed sequences is calculated in every iteration until the likelihood converges. This occurs for all eight HMMs used to classify all eight activities until the models parameters have converged and the HMMs are built.
 
-
+For classification given observed sequences of testing data, the likelihood of each model representing an input sequence is calculated. Activity classification is then based on which of the eight HMMs gives the highest likelihood. **********ARGMAX FORMULA*********** The HMM that achieves the highlest liklihood is deemed the most likely action and we classify it as such. We used an implementation of the HMM Toolbox from Kevin Murphy\cite{murphyHMM}.
 
 %-------------------------------------------------------------------------
 \subsection{Petri Network}
