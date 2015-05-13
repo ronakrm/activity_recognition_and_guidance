@@ -1,10 +1,5 @@
 #include "flow.h"
 
-int num_actions = 8;
-int show_track = 0;
-int fps = 20;
-int trajectory_length = fps/4;
-
 
 string inttostring(int num) {
 	string result;          // string which will contain the result
@@ -91,8 +86,6 @@ void outputOpticalFlow(string outdir, string vidname, string segname) {
 			continue;
 		}
 
-
-
 		// do nothing for dead time before start of first action
 		// do nothing for middle frames
 		if ((frame_num) % trajectory_length != 0
@@ -154,7 +147,6 @@ int main(int argc, char** argv)
 {	
 
 	string prefixfolder = "../../../data/";
-	// Half a second if fps = 20
 
 	char* vids_to_process = argv[1];
 	ifstream vids;
