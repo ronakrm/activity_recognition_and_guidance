@@ -58,30 +58,30 @@
 %%%%%%%%% ABSTRACT
 \begin{abstract}
 
+Procedures are detailed sets of instructions specifying how a task is to be performed and are frequently used by entities such as NASA. Accurately executing procedures is an integral part of the success of NASA space missions. Our goal with this work was to develop a method to computationally model a procedure to enable the tracking of the execution of its steps to ensure proper execution. Here we present the Feature-Action-Activity Pipeline which uses low level optical flow features to train a set of HMMs for each action to be learned. We further incorporate domain knowledge into the method by use of a Petri Network to model the task and weight the responses from the HMM models. We evaluated our pipeline both with and without domain knowledge by use of a Petri Network on a dataset we constructed to simulate an actual NASA maintenance procedure. Our results show the promise of our learning method and pipeline but also suggest that more work needs to be done in lightweight feature extraction in the egocentric domain that can be performed in real time to improve our classification accuracy.
+
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
 
-Procedures are the accepted means to operate a spacecraft system or systems to perform specific functions, and consequently are at the heart of all NASA human spaceflight operations~\cite{kortenkamp2008procedure}. A procedure is a detailed set of instructions specifying how a piece of equipment is operated or a task is performed~\cite{frank2010plans}. They are often written to be very general and to cover numerous contingencies. Procedures to operate a class of equipment (e.g., smoke detector) will differ based on make, while procedures to operate a piece of equipment will have conditional or optional steps based on configuration. As an additional complication, constraints of some procedures may be highly conditional, discretionary, or unordered. At the same time, there may be external constraints that limit how a procedure must be executed, and these constraints are not made explicit. The outcomes of NASA missions rely on crew members properly executing a multitude of these complex procedures, making procedure execution support and monitoring a critical factor that can determine success or failure measured both in terms of monetary costs as well as preventing loss of life.
+Procedures are the accepted means to operate a spacecraft system or systems to perform specific functions and consequently are at the heart of all NASA human spaceflight operations~\cite{kortenkamp2008procedure}. A procedure is a detailed set of instructions specifying how a piece of equipment is operated or a task is performed~\cite{frank2010plans}. They are often written to be very general and to cover numerous contingencies. Procedures to operate a class of equipment (e.g., smoke detector) will differ based on make, while procedures to operate a piece of equipment will have conditional or optional steps based on configuration. As an additional complication, constraints of some procedures may be highly conditional, discretionary, or unordered. At the same time, there may be external constraints that limit how a procedure must be executed, and these constraints are not made explicit. The outcomes of NASA missions rely on crew members properly executing a multitude of these complex procedures, making procedure execution support and monitoring a critical factor that can determine success or failure measured both in terms of monetary costs as well as preventing loss of life.
 
 There is a body of prior NASA work focused on monitoring the progress of procedures that are not physical. For instance, when instructions to systems of the ISS are sent from ground, the application ThinLayer highlights commands as they are executed to show procedure progress~\cite{frank2010plans}. IPV itself also allows for manually tracking procedure progress for a crew person onboard ISS. However, to date there is little work from NASA in the realm of tracking execution status of physical procedures where crew members are manually manipulating physical objects, such as during maintenance tasks. Our goal with this work is to develop a method to computationally model a procedure to enable tracking of the execution of its steps and detection of crew errors during physical execution.
 
-%outline of paper TODO
-
 \section{Related Work}
 
-Significant work has been done in the field of human action and activity recognition. Turaga et al.~\cite{turaga2008machine} presents a comprehensive overview of this work in detail. In most work, activity recognition is identified as the sum of \emph{actions} performed in a temporal ordering. Parametric models, particularly Hidden Markov Models, have been used with success in many action recognition applications. Yamato et al.~\cite{yamato1992recognizing} employ them to identify whole-body tennis swings. Using background subtraction, they are able to identify the actor in the scene, and learn a model based on how the actor alone is moving over time.
+Significant work has been done in the field of human action and activity recognition. Turaga et al.~\cite{turaga2008machine} presents a comprehensive overview of this work in detail. In most work, activity recognition is identified as the sum of \emph{actions} performed in a temporal ordering. Parametric models, particularly Hidden Markov Models (HMMs), have been used with success in many action recognition applications. Yamato et al.~\cite{yamato1992recognizing} employ them to identify whole-body tennis swings. Using background subtraction, they are able to identify the actor in the scene and learn a model based on how the actor alone is moving over time.
 
-The particular advantage of HMMs in the field of vision lies in their efficiency in modeling time-sequential data. Because the underlying representation of an HMM essentially encodes a state machine, they lend themselves nicely to modeling actions. Actions are composed of sequential time-varying video frames, and the model creates a representation with "probabilistic jumps" from one state to another \cite{turaga2008machine}.
+The particular advantage of HMMs in computer vision lies in their efficiency in modeling time-sequential data. Because the underlying representation of an HMM essentially encodes a state machine, they lend themselves well to modeling actions. Actions are composed of sequential time-varying video frames, and the model creates a representation with probabilistic jumps from one state to another~\cite{turaga2008machine}.
 
 There has been some work in developing HMM formalisms that incorporate domain knowledge as well. Moore et al.~\cite{moore1999exploiting} created a framework combining both HMMs and object detection modules to extract interaction information HMMs alone could not identify. In the work of Chen et al.~\cite{chen2003hand} HMMs are used in conjunction with specific feature extraction methods to recognize hand gestures.
 
-While the above works have been significantly expanded upon, all of that effort has been under the assumption of a third-person view of the action, where the camera is removed from the scene. In our setup, our observation of the underlying scene occurs from an egocentric viewpoint. Egocentric cameras present their own unique affordances, and come with their own unique problems. Technological advances have only recently begun to make common use of egocentric cameras a reality, and as such their is a limited existing body of work to use as a foundation.
+While the above works have been significantly expanded upon, all of that effort has been under the assumption of a third-person view of the action, where the camera is removed from the scene. In the context of many NASA procedures, such an external view may be unavailable. Therefore in our setup, our observation of the underlying scene occurs from an egocentric viewpoint captured from the point of view of the procedure executor. Egocentric cameras present their own unique affordances, and come with their own unique problems. Technological advances have only recently begun to make common use of egocentric cameras a reality, and as such their is a limited existing body of work to use as a foundation.
 
 Though this does prove to be an interesting challenge, the task of instruction completion and error recognition provides us with significant domain knowledge. Rather than having a classification problem in which an unknown task is to be identified, we have significant knowledge of what has already been completed, what the correct next action should look like, and what error states look like. It is this knowledge that we hope to incorporate into our model.
 
-In this way, we employ the concept of \emph{activity} recognition, coupled with our action recognition. We model the entire activity as a set of actions completed in a specific order. To this end, Petri Nets appear to apply quite well~\cite{petri1966communication}. The graphical model format, along with the unique properties of sequencing, concurrency, synchronization, and resource sharing~\cite{david1994petri} that Petri Nets provide allow for a complete high-level representation of the activity. Incorporating the entire procedure in the form of a Petri Net, coupled with the lower-level HMM, we hope to create a system which will allow for effective instruction completion and error recognition.
+In this way, we employ the concept of \emph{activity} recognition, coupled with our action recognition. We model the entire activity as a set of actions completed in a specific order. To this end, Petri Networks appear to apply quite well~\cite{petri1966communication}. The graphical model format, along with the unique properties of sequencing, concurrency, synchronization, and resource sharing that Petri Networks provide~\cite{david1994petri} allows for a complete high-level representation of the activity. By incorporating the entire procedure in the form of a Petri Network coupled with the lower-level HMMs for particular actions, we hope to create a system which will allow for effective instruction completion and error recognition.
 
 %------------------------------------------------------------------------
 
@@ -90,8 +90,16 @@ Because of our novel combination of a variety of vision and machine learning met
 
 During the training stage, low-level features are extracted from training videos and binned. These features are then clustered to create symbol representations, and sequences of these symbols are used as training data for the Hidden Markov Models.
 
+\begin{figure*}[!tp]
+	%\vspace{-17pt}
+    \centering
+    \includegraphics[width=7.1in]{fig/petri.png}
+    \caption{The Petri Net structure for the eight actions used in the disassembly task.}
+    \label{fig:petri}
+\end{figure*}
+
 \subsection{Feature Representation}
-In recent years, dense trajectories have proven to be the most accurate feature representation for action recognition~\cite{wang2011action}. While their combined representation leads to strong classification results, the downside is the immense computational complexity. In order to provide reasonable notification of an erroneous action, our system needs to be as close to real-time as possible using reasonable hardware. While much of the computation can be offloaded to a server, in environments similar to the ISS such computation can still be costly, making dense trajectories feasible for this context of use.
+In recent years, dense trajectories have proven to be the most accurate feature representation for action recognition~\cite{wang2011action}. While their combined representation leads to strong classification results, the downside is the immense computational complexity associated with generating and analyzing them. In order to provide timely notification of an erroneous action, our system needs to operate at as close to real-time as possible using reasonable hardware. While much of the computation can be offloaded to a server external from the feedback device, in environments similar to the ISS such computation can still be costly, making dense trajectories infeasible for this context of use.
 
 With this motivation, we solely make use of optical flow as our low-level feature representation. Wang et al.~\cite{wang2011action} show strong results using only optical flow, and there is some heritage in using it for action recognition~\cite{chaudhry2009histograms}.
 
@@ -110,7 +118,7 @@ During testing, each half-second feature was queried for the cluster closest to 
 \subsection{Hidden Markov Models}
 Classification of the assigned task required that each of the actions that made up the tasks must be recognized to determine whether or not instructions had been completely incrementally. To achieve classification of individual actions, a Hidden Markov Model (HMM) implementation was used. Markov Models are essentially a graph structure that represent states of an input sequence probabilistically. Given a known set of possible observed symbols and states, the model can determine the probability of a transition from one state to another given an input sequence.
 
-Given that the state sequences of the optical flow features could not be determined in advance, a Hidden Markov Model was trained. A HMM has no knowledge of the state topology that was used to generate an output sequence. However, a HMM can be trained based on instances of observed sequences using an Expectation-Maximization algorithm. The most commonly used is the Baum-Welch algorithm~\cite{welch2003hidden}. To simplify the HMM implementation, discrete output sequences were assumed and achieved by means of the previously described codebook generation. When a new HOOF feature is generated from optical flow, the nearest cluster center from the codebook classifies each flow. This cluster center roughly maps to a subaction of the activity being performed. An activity is made up of many optical flows over many frames, thus finding the closest cluster centers provides a symbol of roughly which subaction occurred in the activity as a whole. Using such a method allowed for discrete HMMs to be used.
+Given that the state sequences of the optical flow features could not be determined in advance, a Hidden Markov Model was trained. A HMM has no knowledge of the state topology that was used to generate an output sequence. However, a HMM can be trained based on instances of observed sequences using an Expectation-Maximization algorithm. The implementation most commonly used is the Baum-Welch algorithm~\cite{welch2003hidden}. To simplify the HMM implementation, discrete output sequences were assumed and achieved by means of the previously described codebook generation. When a new HOOF feature is generated from optical flow, the nearest cluster center from the codebook classifies each flow. This cluster center roughly maps to a subaction of the activity being performed. An activity is made up of many optical flows over many frames, thus finding the closest cluster centers provides a symbol of roughly which subaction occurred in the activity as a whole. Using such a method allowed for discrete HMMs to be used.
 
 For action recognition, one HMM will model a single action. As the task used for testing had eight activities, eight HMMs had to be trained for action recognition. All eight models were initialized with random parameters for the transition probabilities and emission states. Training data was segmented into only instances of a single activity for HMM training. The Baum-Welch algorithm was then used to train a single HMM model based on all observed sequences of an activity using the training data. The likelihood of the model representing the observed sequences is calculated in every iteration until the likelihood converges. This occurs for all eight HMMs used to classify all eight actions until the models parameters have converged and the HMMs are built.
 
@@ -119,32 +127,16 @@ For classification given observed sequences $s$ of testing data, the likelihood 
 \begin{equation}
 \hat a = \arg_{a\in A}\max L(M(s))
 \end{equation}
+
 The HMM that achieves the highest likelihood is deemed the most likely action and we classify it as such. We used an implementation of the HMM Toolbox from Kevin Murphy~\cite{murphyHMM}.
 
 %-------------------------------------------------------------------------
 \subsection{Petri Network}
-A Petri Network was used as a means of modeling the task as a series of actions to be completed to achieve the classification of the task as a whole. Petri Networks were first introduced by Carl Adam Petri~\cite{petri1962kommunikation}. Petri Networks are represented by a bipartite graph that represent states that you can be in, called places, as well as arcs from place to place, known as transitions. When in a given state, there are any number of tokens in that state representing that the place is the current place. When a state can transition to another, the transition is said to fire, whereupon we advance to a different place and another set of transitions can be enabled. 
+A Petri Network was used as a means of modeling the task as a series of actions to be completed to achieve the classification of the task as a whole. Petri Networks were first introduced by Carl Adam Petri~\cite{petri1962kommunikation}. Petri Networks are represented by a bipartite graph that represent states of a task, called places, as well as arcs from place to place, known as transitions. When in a given state, there can be any number of tokens in that state representing that the place is the current place. When a state can transition to another, the transition is said to fire, whereupon we advance to a different place and another set of transitions can be enabled.
 
-In this standard definition of Petri Networks, one can model behavior similar to a Finite State Machine. Given the nature of an assigned task, with domain knowledge, this scales with our model very well as we have several known activities that must be completed before the task as a whole can be deemed complete. For our purposes, each node represents the fact that we are currently waiting for a specific activity to be recognized, while a transition represents that a transition from one place to another indicates that an activitiy was detected, and the task has progressed to the next stage overall.
+In this standard definition of Petri Networks, one can model behavior similar to a Finite State Machine. Given the nature of an assigned task, with domain knowledge, this scales with our model very well as we have several known activities that must be completed before the task as a whole can be deemed complete. For our purposes, each node represents the fact that we are currently waiting for a specific activity to be recognized, while a transition represents that a transition from one place to another indicates that an activity was detected, and the task has progressed to the next stage overall.
 
-In this basic set up, we simply defined the layout of our Petri Network as shown in Figure~\ref{fig:petri}. Using the known structure of the Petri Network, the activity classifications are passed off from the HMM models' outputs. When the likelihood of an action is greater than a threshold, we can say that the activity was observed, and the Petri Network should advance accordingly. When all necessary transitions to perform the task are satisfied, we can say with confidence that the task was completed based on the series of activities observed. Petri Network modeling was achieved using GPenSIM~\cite{davidrajuh2010gpensim}.
-
-\begin{figure*}[t]
-	%\vspace{-7pt}
-    \centering
-    \includegraphics[width=7.1in]{fig/petri.png}
-    \caption{The Petri Net structure for the eight actions used in the disassembly task.}
-    \label{fig:petri}
-\end{figure*}
-
-%------------------------------------------------------------------------
-\section{Experimental Evaluation}
-
-We evaluated our proposed Feature-Action-Activity pipeline in a number of experiments. Below we describe our dataset, which was constructed based off of an actual NASA procedure and related constraints. Additionally, we describe the acquisition of the dataset following by the results of classification experiments with and without use of the Petri Network.
-
-\subsection{Dataset}
-
-Frank et al.~\cite{frank2013autonomous} describe several physical procedures frequently conducted on the International Space Station (ISS). One of these procedures is the Interim Resistive Exercise Device (iRED) Inspection and Cleaning task. This procedure involves crew disassembling the piece of exercise equipment, inspecting and cleaning the inner parts, capturing and sending inspection photos to ground control, and then reassembling the device. We based the task we created on this procedure.
+In this basic set up, we defined the layout of our Petri Network as shown in Figure~\ref{fig:petri}. Using the known structure of the Petri Network, the activity classifications are passed off from the HMM models' outputs. When the likelihood of an action is greater than a threshold, we can say that the activity was observed, and the Petri Network should advance accordingly. When all necessary transitions to perform the task are satisfied, we can say with confidence that the task was completed based on the series of activities observed. Petri Network modeling was achieved using GPenSIM~\cite{davidrajuh2010gpensim}.
 
 \begin{figure}[!t]
     \centering
@@ -154,9 +146,12 @@ Frank et al.~\cite{frank2013autonomous} describe several physical procedures fre
     %\vspace{-16pt}
 \end{figure}
 
-The piece of exercise equipment we used for our task is shown on the left in Figure~\ref{fig:equipment} with the necessary tools shown on the right. The complete disassembly, photographing, and reassembly task consists of 66 actions. However, we used only the first eight actions of the disassembly portion of the task in our dataset. This task therefore consisted of 1) removing an electronic display, 2 and 3) removing two resistance cords, 4) attaching the proper drill bit to an electronic screwdriver, 5 and 6) removing the two steps, 7) unscrewing by hand a resistance knob, and 8) detaching a wheel. This task involves a mixture of tool use and hand manipulation of components of a variety of parts on the exercise device. It therefore requires a large amount of participant mobility.
+%------------------------------------------------------------------------
+\section{Experimental Evaluation}
 
-For the data collection, each participant executed the disassembly procedure with the instructions for the procedure delivered via a prototype task support system developed on the Google Glass\footnote{\href{http://en.wikipedia.org/wiki/Google_Glass}{http://en.wikipedia.org/wiki/Google\_Glass}} Platform, a lightweight head-mounted display device. These types of task guidance systems are being developed in other work, but this system provides a good platform for the acquisition of egocentric video information captured from the Glass device's camera, so it was selected for this purpose. The device was modified slightly to better capture the salient visual content of the task execution. The modified device is shown in Figure~\ref{fig:glass}. We attached a mirror  at an angle of approximately 25$\degree$ from level to the device with a 3D printed mount. When manipulating objects with the hands in front of themselves, most people both tilt their heads downward slightly and look downward with their eyes. The head-mounted camera will move with the head tilt, and the mirror helps to correct for the additional downward direction contributed by eye movements. A sample frame captured from the egocentric camera and mirror during the task is shown in Figure~\ref{fig:egocentric}.
+We evaluated our proposed Feature-Action-Activity pipeline in a number of experiments. Below we describe our dataset, which was constructed based off of an actual NASA procedure and related constraints. Additionally, we describe the acquisition of the dataset following by the results of classification experiments with and without use of the Petri Network.
+
+\subsection{Dataset}
 
 \begin{figure}[!b]
     \centering
@@ -166,9 +161,15 @@ For the data collection, each participant executed the disassembly procedure wit
     %\vspace{-16pt}
 \end{figure}
 
+Frank et al.~\cite{frank2013autonomous} describe several physical procedures frequently conducted on the International Space Station (ISS). One of these procedures is the Interim Resistive Exercise Device (iRED) Inspection and Cleaning task. This procedure involves crew disassembling the piece of exercise equipment, inspecting and cleaning the inner parts, capturing and sending inspection photos to ground control, and then reassembling the device. We based the task we created on this procedure.
 
+The piece of exercise equipment we used for our task is shown on the left in Figure~\ref{fig:equipment} with the necessary tools shown on the right. The complete disassembly, photographing, and reassembly task consists of 66 actions. However, we used only the first eight actions of the disassembly portion of the task in our dataset. This task therefore consisted of 1) removing an electronic display, 2 and 3) removing two resistance cords, 4) attaching the proper drill bit to an electronic screwdriver, 5 and 6) removing the two steps, 7) unscrewing by hand a resistance knob, and 8) detaching a wheel. This task involves a mixture of tool use and hand manipulation of components of a variety of parts on the exercise device. It therefore requires a large amount of participant mobility and each action should have unique features which can be recognized.
 
-\begin{figure}[!b]
+For the data collection, each participant executed the disassembly procedure with the instructions for the procedure delivered via a prototype task support system developed on the Google Glass\footnote{\href{http://en.wikipedia.org/wiki/Google_Glass}{http://en.wikipedia.org/wiki/Google\_Glass}} Platform, a lightweight head-mounted display device. These types of task guidance systems are being developed in other work, but this system provides a good platform for the acquisition of egocentric video information captured from the Glass device's camera, so it was selected for this purpose. The device was modified slightly to better capture the salient visual content of the task execution. The modified device is shown in Figure~\ref{fig:glass}. We attached a mirror  at an angle of approximately 25$\degree$ from level to the device with a 3D printed mount. When manipulating objects with the hands in front of themselves, most people both tilt their heads downward slightly and look downward with their eyes. The head-mounted camera will move with the head tilt, and the mirror helps to correct for the additional downward direction contributed by eye movements. A sample frame captured from the egocentric camera and mirror during the task is shown in Figure~\ref{fig:egocentric}.
+
+Each of the authors executed the eight actions of the exercise procedure ten times, resulting in our dataset of 30 egocentric videos of the same task. The authors had varying degrees of prior knowledge of the procedure, so the data consists of procedure executors of multiple levels of skill, resulting in a variety of techniques and times needed to execute the procedure. For example, one author had no knowledge of the procedure, and therefore initially relied completely on the task guidance delivered by the Glass device to preform the procedure. By the end of his tenth execution, he had internalized the procedure, eliminating the need to reference the assistance device. He was also significantly faster than before. His set of ten videos, therefore, has him performing at a continuum of expertise levels as he increased in familiarity with the procedure. Thus, while there were only three participants included in the dataset, we believe there is still ample variety in the dataset and that testing with this data will generalize to other executors of the same procedure. Each of the actions in the video was segmented by hand to use for training and testing purposes in the classification.
+
+\begin{figure}[!t]
     \centering
     \includegraphics[width=\columnwidth]{fig/legomyegocentricview.png}
     \caption{A sample frame captured during the disassembly task from the Glass device camera using the mirror attachment.}
@@ -176,22 +177,29 @@ For the data collection, each participant executed the disassembly procedure wit
     %\vspace{-16pt}
 \end{figure}
 
-Each of the authors executed the eight actions of the exercise procedure ten times, resulting in our dataset of 30 egocentric videos of the same task. The authors had varying degrees of prior knowledge of the procedure, so the data consists of procedure executors of multiple levels of skill, resulting in a variety of techniques and times needed to execute the procedure. For example, one author had no knowledge of the procedure, and therefore initially relied completely on the task guidance delivered by the Glass device to preform the procedure. By the end of his tenth execution, he had internalized the procedure, eliminating the need for the assistance device, and was significantly faster than before. His set of ten videos, therefore, has him performing at a continuum of expertise levels as he increased in familiarity with the procedure. Thus, while there were only three participants included in the dataset, we believe there is still ample variety in the dataset and that testing with this data will generalize to other executors of the same procedure. Each of the actions in the video was segmented by hand to use for training and testing purposes in the classification.
+\begin{figure}[!b]
+    \centering
+    \includegraphics[width=\columnwidth]{fig/states_plot.eps}
+    \caption{This graph plots the number of internal HMM states against average class accuracy both with and without the use of the Petri Network. }
+    \label{fig:graph1}
+    %\vspace{-16pt}
+\end{figure}
 
 \subsection{Results}
 
-We evaluated our pipeline in a number of experiments using our exercise equipment disassembly dataset. In the following paragraphs we discuss the methodology used in our grid search of the pipeline parameters and the resulting accuracies.
+We evaluated our pipeline in a number of experiments using our exercise equipment disassembly dataset. Next, we discuss the methodology used in our grid search of the pipeline parameters and the resulting accuracies.
 
-We performed a grid search manipulating the following parameters: 1) the number of bins used in the HOOF histogram binning, 2) the size of the the codebook of HOOF features, and 3) the number of states in the HMMs. To evaluate each parameter configuration, we used a leave-one-out cross validation technique where 29 of the 30 videos were used to generate the codebook and train the HMMs. The actions of the last video were then each passed through the pipeline and the predicted action was the one which had the highest probability from the set of HMMs. The results using the Petri Network of the task used a weighting factor of 0.98. In all cases, random number generation was seeded such that k-means and the HMMs will produce repeatable results. Additionally, both of these processes were run with enough iterations to ensure convergence. To evaluate the accuracies of predicting each action for each configuration, we averaged (by action) these 30 accuracy results to determine a configuration accuracy. The results for some of the parameter configurations are shown in Table~\ref{tab:results}.
+We performed a grid search manipulating the following parameters: 1) the number of bins used in the HOOF histogram binning $\{$10, 30$\}$, 2) the size of the the codebook of HOOF features $\{$5, 25, 45, 65, 85, 105, 125, 145$\}$, and 3) the number of states in the HMMs $\{$3, 9, 15, 21, 27$\}$. To evaluate each parameter configuration, we used a leave-one-out cross validation technique where 29 of the 30 videos were used to generate the codebook and train the HMMs. The actions of the last video were then each passed through the pipeline and the predicted action was the one which had the highest probability from the set of HMMs. The results using the Petri Network of the task used a weighting factor of 0.98. In all cases, random number generation was seeded such that k-means and the HMMs will produce repeatable results. Additionally, both of these processes were run with enough iterations to ensure convergence. To evaluate the accuracies of predicting each action for each configuration, we averaged (by action) these 30 accuracy results to determine a configuration accuracy. The results for the parameter configurations are shown in Figures~\ref{fig:graph1} and~\ref{fig:graph2}.
  
-%\begin{table}[!tp]
-%	\centering
-%	\includegraphics[width=\columnwidth]{figures/TODO.JPG}
-%	\caption{TODO Configuration accuracy results for each action for a subset of the grid search.}
-%	\label{tab:results}
-%\end{table}
+\begin{figure}[!b]
+    \centering
+    \includegraphics[width=\columnwidth]{fig/codebook_plot.eps}
+    \caption{This graph plots the size of the codebook used against average class accuracy both with and without the use of the Petri Network.}
+    \label{fig:graph2}
+    %\vspace{-16pt}
+\end{figure}
 
-While these accuracies are not spectacular, they are still significant in that random chance would put the accuracy at 0.125. Additionally, these results are comparable to accuracies in prior work that also use an egocentric camera~\cite{TODO-RONAK}. In the next section we discuss the challenges we discovered with our technique and the implications for future methods to improve the results of real-time prediction of actions from egocentric cameras.
+While these accuracies are not spectacular, they are still significant in that random chance would put the accuracy at 0.125. Additionally, these results are comparable to accuracies in prior work that also use an egocentric camera~\cite{ren2009egocentric}. In the next section we discuss the challenges we discovered with our technique and the implications for future methods to improve the results of real-time prediction of actions from egocentric cameras.
 
 \section{Discussion and Future Work}
 
@@ -213,9 +221,10 @@ For this reason we expect more work needs to be done in feature extraction in th
  
 \section{Conclusion}
 
+Accurately executing procedures is an integral part of the success of NASA space missions. Our goal with this work was to develop a method to computationally model a procedure to enable the tracking of the execution of its steps. To this end, we developed a Feature-Action-Activity Pipeline that calculates optical flow from an egocentric camera on the procedure executor at half second intervals, bins the flows into histograms (HOOF), clusters these histograms to form a codebook, and trains HMMs for each action using the sequences of codes from the training actions. We evaluated our pipeline both with and without domain knowledge by use of a Petri Network on a dataset we constructed to simulate an actual NASA maintenance procedure. Our results show the promise of our learning method and pipeline but also suggest that more work needs to be done in lightweight feature extraction in the egocentric domain that can be performed in real time.
 
 
-{\small
+{%\small
 \bibliographystyle{ieee}
 \bibliography{CS766_final_report}
 }
