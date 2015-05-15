@@ -18,7 +18,7 @@ for numHoofBins = 10:20:50
     for numSymbols = 5:20:145
         for numStates = 3:6:27
             [accuracy, actionAccuracies] = crossValidation(...
-                numHoofBins, numStates, numSymbols, 1000);
+                numStates, numSymbols, 1000);
             
             outputfile(counter,1:3) = {numHoofBins, numSymbols, numStates};
             outputfile(counter,12) = {accuracy};
