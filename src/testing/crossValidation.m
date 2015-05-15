@@ -1,4 +1,4 @@
-function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, numSymbols, numHMMIters)
+function [accuracy, actionAccuracies] = crossValidation(numStates, numSymbols, numHMMIters)
 %   Performs cross-validation testing to determine accuracy for action
 %   recognition
 %
