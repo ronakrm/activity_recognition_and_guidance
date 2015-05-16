@@ -17,3 +17,9 @@ slprj/
 
 # video files
 *.mp4
+
+#latex
+*.aux
+*.brf
+*.log
+*.out
