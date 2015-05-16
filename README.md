@@ -28,11 +28,11 @@ HOOF features used for training are clustered using kmeans, and the clusters are
 
 #### Hidden Markov Models
 
-Cluster identifications are used as the symbol set for training the hidden markov models (HMMs). The HMMs are trained on the sequences generated from the training data after kmeans, and sequences of test symbols are sent to the HMM to be queried.
+Cluster identifications are used as the oberable symbol set for training the Hidden Markov Models (HMMs). The HMMs are trained on the sequences generated from the training data after kmeans, and sequences of test symbols are sent to the HMM to be queried. An HMM is created to model each action, and all models are fed the same testing sequences. The HMM with the maximum likelihood is deemed to classify the action.
 
 #### Petri Nets
 
-Our domain knowledge is incorporated into the learning process through Petri Nets. We encode the activity procedure into the Petri Net, and use it to dynamically weight the log probabilities output by the HMMs. 
+Our domain knowledge is incorporated into the learning process through Petri Nets. We encode the activity procedure into the Petri Net, and use it to dynamically weight the log probabilities output by the HMMs. Petri Net states represent the expectation of a specific action occurring, while transitions represent the action actually occurring. Transitions are said to "fire" when an action that is expected is recognized.
 
 ### Cross Validation
 
