@@ -8,6 +8,27 @@ function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, 
 %       accuracy - the overall accuracy of the action recognition
 %       actionAccuracies - the accuracy of each action classification
 
+% initialize the action recognitions
+global actions;
+actions = struct('removeElectronicDisplay',zeros(1), ...
+                 'unscrewFirstHandGrip',zeros(1), ...
+                 'unscrewSecondHandGrip',zeros(1), ...
+                 'attachDrillHead', zeros(1), ...
+                 'removeFirstStep', zeros(1), ...
+                 'removeSecondStep', zeros(1), ...
+                 'removeKnob', zeros(1), ...
+                 'removeWheel', zeros(1));
+             
+%histories for transition firing on multiple conditions      
+global unscrewFirstHandGrip;
+global unscrewSecondHandGrip;
+global removeFirstStep;
+global removeSecondStep;
+   
+% initialize petri net
+global_info.MAX_LOOP = 40;
+global_info.STARTING_AT = [1 0 0];
+global_info.LOOP_NUMBER = 1;
 
 % THESE ARE ALSO CODED INTO gridSearcher!! Make sure to change there
 % also!
@@ -29,7 +50,7 @@ rng(1337);
 %testing needs
 % generate your hoofs
 %disp('generating hoof features.');
-%hoofgen(numVideos, numActions, numHoofBins);
+hoofgen(numVideos, numActions, numHoofBins);
 %fprintf('hoof features generated.\n');
 
 actionAccuracies = zeros(numActions,1);
@@ -55,6 +76,15 @@ for i = 1 : numVideos
     models = generateHMMs(numActions, numSymbols, numStates, ...
         trainSet, numHMMIters);
     
+    % create a new petri net
+    png = petrinetgraph('definePetriNet');
+    dyn.initial_markings = {'RED', 2}; % tokens initially
+    
+    unscrewFirstHandGrip = 0;
+    unscrewSecondHandGrip = 0;
+    removeFirstStep = 0;
+    removeSecondStep = 0;
+    
     % test each action of the testing set video on the HMM models
     for j = 1 : numActions
         poss_actions = simPetri(j);
@@ -63,11 +93,27 @@ for i = 1 : numVideos
         % find which action was recognized
         [max_likelihood, max_index, likelihoods] = testLikelihood(models, testSet(j), weights);
 
+        % update the global action recognition likelihoods
+        actions.removeElectronicDisplay = likelihoods(1);
+        actions.unscrewFirstHandGrip = likelihoods(2);
+        actions.unscrewSecondHandGrip = likelihoods(3);
+        actions.attachDrillHead = likelihoods(4);
+        actions.removeFirstStep = likelihoods(5);
+        actions.removeSecondStep = likelihoods(6);
+        actions.removeKnob = likelihoods(7);
+        actions.removeWheel = likelihoods(8);
+        
+        % update the petri net
+        sim = gpensim(png, dyn, global_info);
+        
         % if the correct action was recognized
         if(max_index == j)
             actionAccuracies(j) = actionAccuracies(j) + 1;
         end
     end
+    
+    %print the petri net statespace
+    print_statespace(sim);
 end
 
 % return the overall accuracy

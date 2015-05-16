@@ -10,15 +10,15 @@ numActions = 8;
 outputfile = {'numHoofBins', 'numSymbols', 'numStates', '1','2','3','4','5','6','7','8','acc'};
 counter = 2;
 
-for numHoofBins = 10:20:50
+for numHoofBins = 30
     % generate your hoofs
     disp('generating hoof features.');
     hoofgen(numVideos, numActions, numHoofBins);
     fprintf('hoof features generated.\n');
-    for numSymbols = 5:20:145
-        for numStates = 3:6:27
+    for numSymbols = 65:20:145
+        for numStates = 24:6:27
             [accuracy, actionAccuracies] = crossValidation(...
-                numHoofBins, numStates, numSymbols, 1000);
+                numHoofBins, numStates, numSymbols, 500);
             
             outputfile(counter,1:3) = {numHoofBins, numSymbols, numStates};
             outputfile(counter,12) = {accuracy};

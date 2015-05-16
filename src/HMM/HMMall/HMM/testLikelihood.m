@@ -18,8 +18,8 @@ function [max_likelihood, max_index, likelihoods] = testLikelihood(models, seque
     
     end
     
-    %weight actions based on weights by petri net
-    likelihoods = likelihoods.*weights;
+%     %weight actions based on weights by petri net
+%     likelihoods = likelihoods.*weights;
     
     % return the maximum likelihood and the action that yielded it
     [max_likelihood, max_index] = max(likelihoods);
