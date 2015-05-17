@@ -1,4 +1,4 @@
-function [accuracy, actionAccuracies] = crossValidation(numStates, numSymbols, numHMMIters)
+function [accuracy, actionAccuracies] = crossValidation(numHoofBins, numStates, numSymbols, numHMMIters)
 %   Performs cross-validation testing to determine accuracy for action
 %   recognition
 %
@@ -50,7 +50,7 @@ rng(1337);
 %testing needs
 % generate your hoofs
 %disp('generating hoof features.');
-hoofgen(numVideos, numActions, numHoofBins);
+%hoofgen(numVideos, numActions, numHoofBins);
 %fprintf('hoof features generated.\n');
 
 actionAccuracies = zeros(numActions,1);
@@ -104,7 +104,7 @@ for i = 1 : numVideos
         actions.removeWheel = likelihoods(8);
         
         % update the petri net
-        sim = gpensim(png, dyn, global_info);
+        %sim = gpensim(png, dyn, global_info);
         
         % if the correct action was recognized
         if(max_index == j)
@@ -113,7 +113,7 @@ for i = 1 : numVideos
     end
     
     %print the petri net statespace
-    print_statespace(sim);
+    %print_statespace(sim);
 end
 
 % return the overall accuracy

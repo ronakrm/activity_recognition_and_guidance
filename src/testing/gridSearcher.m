@@ -15,8 +15,8 @@ for numHoofBins = 30
     disp('generating hoof features.');
     hoofgen(numVideos, numActions, numHoofBins);
     fprintf('hoof features generated.\n');
-    for numSymbols = 65:20:145
-        for numStates = 24:6:27
+    for numSymbols = 5:20:145
+        for numStates = 3:6:27
             [accuracy, actionAccuracies] = crossValidation(...
                 numHoofBins, numStates, numSymbols, 500);
             
