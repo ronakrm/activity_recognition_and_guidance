@@ -1,8 +1,8 @@
 %% Generate Plots of Results from Grid Search
 % before are the results without the Petri Net Thresholding
 % after are the results with the Petri Net Thresholding
-%before = cell2mat(before(2:size(before,1),:));
-%after = cell2mat(after(2:size(after,1),:));
+before = cell2mat(before(2:size(before,1),:));
+after = cell2mat(after(2:size(after,1),:));
 
 % plot numHoofBins vs total accuracy
 % figure;
